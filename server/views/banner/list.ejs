@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title><%- title  %></title>
+    <title><%- title %></title>
 
     <!-- Custom fonts for this template -->
     <link
@@ -62,7 +62,7 @@
               </div>
 
               <% if(!data || data.length===0){%>
-              <p class="text-center text-danger mt-3">No data found</p>
+              <p class="text-center text-danger mt-3">No available banners</p>
 
               <% }else {%>
 
@@ -79,7 +79,9 @@
                         <th>#</th>
                         <th>Title</th>
                         <th>Sub Title</th>
-                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Primary Image</th>
+                        <th>Secondary Image</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -88,7 +90,9 @@
                         <th>#</th>
                         <th>Title</th>
                         <th>Sub Title</th>
-                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Primary Image</th>
+                        <th>Secondary Image</th>
                         <th>Actions</th>
                       </tr>
                     </tfoot>
@@ -99,16 +103,28 @@
 
                         <td><%- item.title %></td>
                         <td><%- item.subtitle %></td>
+                        <td><%- item.description %></td>
                         <td>
-                          <img src="http://localhost:5000/<%- item.image  %>" alt="Banner Image" class="table-data-image"/>
+                          <img
+                            src="http://localhost:5000/<%- item.primaryImage  %>"
+                            alt="Banner Image"
+                            class="table-data-image"
+                          />
+                        </td>
+                        <td>
+                          <img
+                            src="http://localhost:5000/<%- item.secondaryImage  %>"
+                            alt="Banner Image"
+                            class="table-data-image"
+                          />
                         </td>
 
                         <td>
                           <a
                             href="/banner/edit/<%- item._id %>"
                             class="btn btn-warning btn-sm"
-                            ><i class="fas fa-pen"></i></a
-                          >
+                            ><i class="fas fa-pen"></i
+                          ></a>
 
                           <form
                             action="/banner/delete/<%- item._id %>"
@@ -120,7 +136,7 @@
                               onclick="return confirm('Are you sure?')"
                               type="submit"
                             >
-                             <i class="fas fa-trash"></i>
+                              <i class="fas fa-trash"></i>
                             </button>
                           </form>
                         </td>

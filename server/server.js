@@ -14,7 +14,7 @@ app.use(express.static(__dirname+ "/public"))
 
 //Admin Routes
 const adminRouter = require("./app/routes/AdminRoutes")
-app.use("/admin", adminRouter)
+app.use("/", adminRouter)
 
 const port = 5000
 app.listen(port, () => {
