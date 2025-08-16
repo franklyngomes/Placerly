@@ -13,6 +13,8 @@
     <title><%- title %></title>
 
     <!-- Custom fonts for this template -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- Custom fonts for this template-->
     <link
       href="/vendor/fontawesome-free/css/all.min.css"
       rel="stylesheet"
@@ -23,13 +25,14 @@
       rel="stylesheet"
     />
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
-
-    <!-- Custom styles for this page -->
     <link
-      href="/vendor/datatables/dataTables.bootstrap4.min.css"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
   </head>
 
@@ -52,19 +55,21 @@
 
           <!-- Begin Page Content -->
           <div class="container-fluid">
+            <div id="flashMessage" class="z-10"></div>
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800 font-weight-light">All Banners</h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <a href="/banner/add" class="btn btn-success"> Add banner </a>
+                <button
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Add banner
+                </button>
               </div>
-
-              <% if(!data || data.length===0){%>
-              <p class="text-center text-danger mt-3">No available banners</p>
-
-              <% }else {%>
 
               <div class="card-body">
                 <div class="table-responsive">
@@ -76,78 +81,33 @@
                   >
                     <thead>
                       <tr>
-                        <th>#</th>
+                        <th>Sl No.</th>
                         <th>Title</th>
                         <th>Sub Title</th>
                         <th>Description</th>
                         <th>Primary Image</th>
                         <th>Secondary Image</th>
+                        <th>Active Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                        <th>#</th>
+                        <th>Sl No.</th>
                         <th>Title</th>
                         <th>Sub Title</th>
                         <th>Description</th>
                         <th>Primary Image</th>
                         <th>Secondary Image</th>
+                        <th>Active Status</th>
                         <th>Actions</th>
                       </tr>
                     </tfoot>
-                    <tbody>
-                      <% data.forEach((item,index )=> { %>
-                      <tr>
-                        <td><%= index+1 %></td>
-
-                        <td><%- item.title %></td>
-                        <td><%- item.subtitle %></td>
-                        <td><%- item.description %></td>
-                        <td>
-                          <img
-                            src="http://localhost:5000/<%- item.primaryImage  %>"
-                            alt="Banner Image"
-                            class="table-data-image"
-                          />
-                        </td>
-                        <td>
-                          <img
-                            src="http://localhost:5000/<%- item.secondaryImage  %>"
-                            alt="Banner Image"
-                            class="table-data-image"
-                          />
-                        </td>
-
-                        <td>
-                          <a
-                            href="/banner/edit/<%- item._id %>"
-                            class="btn btn-warning btn-sm"
-                            ><i class="fas fa-pen"></i
-                          ></a>
-
-                          <form
-                            action="/banner/delete/<%- item._id %>"
-                            method="get"
-                            style="display: inline-block"
-                          >
-                            <button
-                              class="btn btn-danger btn-sm"
-                              onclick="return confirm('Are you sure?')"
-                              type="submit"
-                            >
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </form>
-                        </td>
-                      </tr>
-                      <% }) %>
-                    </tbody>
+                    <tbody id="bannerTableBody"></tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <%} %>
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -162,6 +122,82 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Modal Start -->
+    <form
+      action=""
+      method="post"
+      id="banner-form"
+      enctype="multipart/form-data"
+    >
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Banner</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- ✅ Removed nested form -->
+              <div class="form-group">
+                <label>Title:</label>
+                <input type="text" class="form-control" name="title" required />
+              </div>
+              <div class="form-group">
+                <label>Subtitle:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="subtitle"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Description:</label>
+                <textarea
+                  class="form-control"
+                  name="description"
+                  required
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Primary Image:</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="primaryImage"
+                  accept="image/*"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Secondary Image:</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="secondaryImage"
+                  accept="image/*"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Modal End -->
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
@@ -205,7 +241,12 @@
         </div>
       </div>
     </div>
-
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -222,5 +263,130 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+    <script>
+      function loadBanners() {
+        $.ajax({
+          url: "/list-banner",
+          type: "GET",
+          success: function (response) {
+            const banners = response.data;
+            const tbody = $("#bannerTableBody");
+            tbody.empty(); // clear old rows
+
+            banners.forEach((item, index) => {
+              tbody.append(`
+            <tr>
+              <td>${index + 1}</td>
+              <td>${item.title}</td>
+              <td>${item.subtitle}</td>
+              <td>${item.description}</td>
+              <td> <img src="http://localhost:5000/${
+                item.primaryImage
+              }" alt="Banner Image" class="table-data-image" style="width: 100px" /> </td> 
+              <td> <img src="http://localhost:5000/${
+                item.secondaryImage
+              }" alt="Banner Image" class="table-data-image" style="width: 100px" /> </td>
+              <td> ${
+                item.status === true ? "<p>Active</p>" : "<p>Inactive</p>"
+              }</td>
+              <td>
+                <a href="/banner/edit/${
+                  item._id
+                }" class="btn btn-warning btn-sm">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${
+                  item._id
+                }">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          `);
+            });
+          },
+          error: function (xhr) {
+            $("#flashMessage").html(
+              `<div class="alert alert-danger">Error loading banners</div>`
+            );
+          },
+        });
+      }
+      //Delete Function
+      $(document).on("click",".delete-btn", function () {
+        const id = $(this).data("id");
+        if (confirm("Are you sure you want to delete this banner?")) {
+          $.ajax({
+            url: `/delete-banner/${id}`,
+            async: true,
+            method: "DELETE",
+            success: function (response) {
+              $("#flashMessage").html(
+                `<div class="alert alert-success" role="alert">${response.message}</div>`
+              );
+              $(".alert")
+                .delay(5000)
+                .slideUp(200, function () {
+                  $(this).alert("close");
+                });
+              loadBanners();
+            },
+            error: function (response) {
+              $("#flashMessage").html(
+                `<div class="alert alert-danger" role="alert">${response.message}</div>`
+              );
+              $(".alert")
+                .delay(5000)
+                .slideUp(200, function () {
+                  $(this).alert("close");
+                });
+            },
+          });
+        }
+      });
+      // load banners when page loads
+      $(document).ready(loadBanners);
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        //Create Function
+        $("#banner-form").submit(function (e) {
+          e.preventDefault();
+          let formData = new FormData(this);
+          $.ajax({
+            url: "/add-banner",
+            async: true,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              $("#flashMessage").html(
+                `<div class="alert alert-success" role="alert">${response.message}</div>`
+              );
+              $(".alert")
+                .delay(5000)
+                .slideUp(200, function () {
+                  $(this).alert("close");
+                });
+              $("#banner-form")[0].reset();
+              loadBanners();
+            },
+            error: function (response) {
+              $("#flashMessage").html(
+                `<div class="alert alert-danger" role="alert">${response.message}</div>`
+              );
+              $(".alert")
+                .delay(5000)
+                .slideUp(200, function () {
+                  $(this).alert("close");
+                });
+              $("#banner-form")[0].reset();
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,6 +1,120 @@
-const BannerModel = require('../../model/client/BannerModel')
+const HttpCode = require("../../helper/HttpCode");
+const BannerModel = require("../../model/client/BannerModel");
+const fsSync = require("fs");
+const fs = require("fs").promises;
 
-class BannerController{
+class BannerController {
+  async listBanner(req, res) {
+    try {
+      const banners = await BannerModel.find();
+      if (!banners) {
+        return res.status(HttpCode.notFound).json({
+          status: false,
+          message: "No available banners",
+        });
+      }
+      return res.status(HttpCode.success).json({
+        status: false,
+        message: "Banners fetched successfully!",
+        data: banners,
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+  async createBanner(req, res) {
+    try {
+      const { title, subtitle, description } = req.body;
+      const bannerData = new BannerModel({
+        title,
+        subtitle,
+        description,
+      });
+      if (req.files && req.files.primaryImage) {
+        bannerData.primaryImage = req.files.primaryImage[0].path;
+      }
+      if (req.files && req.files.secondaryImage) {
+        bannerData.secondaryImage = req.files.secondaryImage[0].path;
+      }
+      const data = await bannerData.save();
+      return res.status(HttpCode.create).json({
+        status: true,
+        message: "Banner added successfully!",
+        data: data,
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+  async updateBanner(req, res) {
+    try {
+      const id = req.params.id;
+      const updateData = await BannerModel.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+      if (!updateData) {
+        return res.status(httpCode.badRequest).json({
+          message: "Banner not found!",
+        });
+      }
+      if (updateData.image) {
+        const existingFile = updateData.image;
+        if (fsSync.existsSync(existingFile)) {
+          await fs.unlink(existingFile);
+          console.log("File Detected: ", existingFile);
+        } else {
+          console.log("File not found! ", existingFile);
+        }
+      }
+      if (req.file) {
+        const newImagePath = req.file.path;
+        updateData.image = newImagePath;
+        await updateData.save();
+      }
+      return res.redirect("/banner/list");
+    } catch (error) {
+      return res.status(httpCode.internalServerError).json({
+        message: error.message,
+      });
+    }
+  }
+  async deleteBanner(req, res) {
+    try {
+      const deletedBanner = await BannerModel.findByIdAndDelete(req.params.id);
+      if (!deletedBanner) {
+        return res.status(HttpCode.badRequest).json({
+          status: false,
+          message: "Banner not found!",
+        });
+      }
+      if (deletedBanner.primaryImage && deletedBanner.secondaryImage) {
+        const primaryImgAbsolutePath = deletedBanner.primaryImage;
+        const secondaryImgAbsolutePath = deletedBanner.secondaryImage;
 
+        if (
+          fsSync.existsSync(primaryImgAbsolutePath) &&
+          fsSync.existsSync(secondaryImgAbsolutePath)
+        ) {
+          await fs.unlink(primaryImgAbsolutePath);
+          await fs.unlink(secondaryImgAbsolutePath);
+        }
+      }
+      return res.status(HttpCode.success).json({
+        status: true,
+        message: "Banner deleted successfully!",
+      });
+    } catch (error) {
+      res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
 }
-module.exports = new BannerController()
+module.exports = new BannerController();
