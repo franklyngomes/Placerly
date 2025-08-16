@@ -10,21 +10,10 @@ router.get("/", AdminController.DashboardPage);
 router.get("/banner", AdminController.BannerListPage);
 
 // Banner Routes
-router.post(
-  "/add-banner",
-  BannerImageUpload.fields([
-    {
-      name: "primaryImage",
-      maxCount: 1,
-    },
-    {
-      name: "secondaryImage",
-      maxCount: 1,
-    },
-  ]),
-  BannerController.createBanner
-);
+router.post("/add-banner",BannerImageUpload.fields([{name: "primaryImage",maxCount: 1,},{name: "secondaryImage",maxCount: 1,}]),BannerController.createBanner);
 router.get("/list-banner", BannerController.listBanner)
+router.get("/banner-details/:id",BannerController.bannerDetails)
+router.patch("/banner-update/:id", BannerImageUpload.fields([{name: "primaryImage",maxCount: 1,},{name: "secondaryImage",maxCount: 1,}]), BannerController.updateBanner)
 router.delete('/delete-banner/:id', BannerController.deleteBanner)
 
 module.exports = router;

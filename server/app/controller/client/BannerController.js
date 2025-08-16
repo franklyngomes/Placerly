@@ -52,6 +52,28 @@ class BannerController {
       });
     }
   }
+  async bannerDetails(req, res) {
+    try {
+      const id = req.params.id;
+      const banner = await BannerModel.findById(id);
+      if (!banner) {
+        return res.status(HttpCode.notFound).json({
+          status: false,
+          message: "Banner not found",
+        });
+      }
+      return res.status(HttpCode.success).json({
+        status: false,
+        message: "Banner fetched successfully!",
+        data: banner,
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
   async updateBanner(req, res) {
     try {
       const id = req.params.id;
@@ -59,27 +81,31 @@ class BannerController {
         new: true,
       });
       if (!updateData) {
-        return res.status(httpCode.badRequest).json({
+        return res.status(HttpCode.notFound).json({
           message: "Banner not found!",
         });
       }
-      if (updateData.image) {
-        const existingFile = updateData.image;
-        if (fsSync.existsSync(existingFile)) {
-          await fs.unlink(existingFile);
-          console.log("File Detected: ", existingFile);
-        } else {
-          console.log("File not found! ", existingFile);
+      if (req.files && req.files.primaryImage && req.files.secondaryImage) {
+        if (updateData.primaryImage || updateData.secondaryImage) {
+          if (
+            fsSync.existsSync(updateData.primaryImage) ||
+            fsSync.existsSync(updateData.secondaryImage)
+          ) {
+            await fs.unlink(updateData.primaryImage);
+            await fs.unlink(updateData.secondaryImage);
+          }
+          updateData.primaryImage = req.files.primaryImage[0].path;
+          updateData.secondaryImage = req.files.secondaryImage[0].path;
         }
       }
-      if (req.file) {
-        const newImagePath = req.file.path;
-        updateData.image = newImagePath;
-        await updateData.save();
-      }
-      return res.redirect("/banner/list");
+
+      await updateData.save();
+      return res.status(HttpCode.success).json({
+        status: true,
+        message: "Banner updated successfully!",
+      });
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(HttpCode.serverError).json({
         message: error.message,
       });
     }
