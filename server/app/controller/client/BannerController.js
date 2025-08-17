@@ -121,7 +121,7 @@ class BannerController {
         }
       }
 
-      // await updateData.save();
+      await updateData.save();
       return res.status(HttpCode.success).json({
         status: true,
         message: "Banner updated successfully!",

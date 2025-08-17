@@ -1,5 +1,6 @@
 const HttpCode = require("../helper/HttpCode");
 const {BannerModel} = require("../model/client/BannerModel");
+const {AboutModel} = require("../model/client/AboutModel")
 class AdminController {
   async DashboardPage(req, res) {
     try {
@@ -13,10 +14,9 @@ class AdminController {
   }
   async BannerListPage(req, res) {
     try {
-      const banners = await BannerModel.find();
+      await BannerModel.find();
       return res.render("banner/list", {
         title: "Banner List",
-        // data: banners,
       });
     } catch (error) {
       return res.status(HttpCode.serverError).json({
@@ -25,18 +25,15 @@ class AdminController {
       });
     }
   }
-    //get single data
-  async editPage(req, res) {
+  async AboutListPage(req, res) {
     try {
-      const banner = await BannerModel.findById(req.params.id);
-      console.log(banner);
-      res.render("banner/edit", {
-        title: "Edit Page",
-        data: banner,
-        username: req.user.name,
+      await AboutModel.find();
+      return res.render("about/list", {
+        title: "About List",
       });
     } catch (error) {
-      res.redirect("/banner/list", {
+      return res.status(HttpCode.serverError).json({
+        status: false,
         message: error.message,
       });
     }
