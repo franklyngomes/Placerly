@@ -202,13 +202,17 @@
     <!--Create Modal End -->
 
     <!-- Edit Modal Start -->
-    <form method="post" id="update-form" enctype="multipart/form-data">
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="update-form" enctype="multipart/form-data">
             <div class="modal-header">
               <h5 class="modal-title">Edit Banner</h5>
-              <button type="button" class="close" data-dismiss="modal">
+              <button
+                type="button"
+                class="close edit-modal-close"
+                data-dismiss="modal"
+              >
                 <span>&times;</span>
               </button>
             </div>
@@ -242,7 +246,10 @@
                   required
                 ></textarea>
               </div>
-              <div class="form-group d-flex justify-content-start gap-3" style="margin-left: 20px;">
+              <div
+                class="form-group d-flex justify-content-start gap-3"
+                style="margin-left: 20px"
+              >
                 <div class="form-check form-switch">
                   <input
                     class="form-check-input"
@@ -280,17 +287,19 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-secondary edit-modal-close"
                 data-dismiss="modal"
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary" id="edit-submit">Submit</button>
+              <button type="submit" class="btn btn-primary" id="edit-submit">
+                Submit
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
     <!-- Edit Modal End -->
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -390,8 +399,7 @@
               }</td>
               <td>
                  <button
-                  class="btn btn-warning btn-sm"
-                  id="edit-btn"
+                  class="btn btn-warning btn-sm edit-btn"
                   data-id="${item._id}"
                   data-toggle="modal"
                   data-target="#editModal"
@@ -415,25 +423,6 @@
           },
         });
       }
-      //Get Banner Details
-      $(document).on("click", "#edit-btn", function () {
-        const id = $(this).data("id");
-        $.ajax({
-          url: `/banner-details/${id}`,
-          async: true,
-          method: "GET",
-          success: function (response) {
-            const banner = response.data;
-            $("#edit-title").val(banner.title);
-            $("#edit-subtitle").val(banner.subtitle);
-            $("#edit-description").val(banner.description);
-            if(banner.status){
-              $("#edit-status").attr("checked", true);
-            }
-            $("#update-form").attr("data-id", banner._id)
-          },
-        });
-      });
       //Delete Function
       $(document).on("click", ".delete-btn", function () {
         const id = $(this).data("id");
@@ -455,7 +444,7 @@
             },
             error: function (response) {
               $("#flashMessage").html(
-                `<div class="alert alert-danger" role="alert">${response.message}</div>`
+                `<div class="alert alert-danger" role="alert">${response?.responseJSON?.message}</div>`
               );
               $(".alert")
                 .delay(5000)
@@ -496,7 +485,7 @@
             },
             error: function (response) {
               $("#flashMessage").html(
-                `<div class="alert alert-danger" role="alert">${response.message}</div>`
+                `<div class="alert alert-danger" role="alert">${response?.responseJSON?.message}</div>`
               );
               $(".alert")
                 .delay(5000)
@@ -507,17 +496,38 @@
             },
           });
         });
-
+        //Get Banner Details
+        $(document).on("click", ".edit-btn", function () {
+          const id = $(this).data("id");
+          $("#update-form").attr("data-id", id);
+          $.ajax({
+            url: `/banner-details/${id}`,
+            async: true,
+            method: "GET",
+            success: function (response) {
+              const banner = response.data;
+              $("#edit-title").val(banner.title);
+              $("#edit-subtitle").val(banner.subtitle);
+              $("#edit-description").val(banner.description);
+              $("#edit-status").prop("checked", banner.status === true);
+            },
+          });
+        });
+        $("#editModal").on("hidden.bs.modal", function () {
+          $("#update-form").removeAttr("data-id")[0].reset();
+          $("#edit-status").prop("checked", false);
+        });
         //Update Banner
         $("#update-form").submit(function (e) {
           e.preventDefault();
-          const id = $(this).data("id")
-          const formData = new FormData(this)
-          formData.set("status", $("#edit-status").is(":checked"))
+          const id = $("#update-form").attr("data-id");
+          console.log(id);
+          const formData = new FormData(this);
+          formData.set("status", $("#edit-status").is(":checked"));
           $.ajax({
             url: `/banner-update/${id}`,
-            async:true,
-            data:formData,
+            async: true,
+            data: formData,
             type: "PATCH",
             processData: false,
             contentType: false,
@@ -534,7 +544,7 @@
             },
             error: function (response) {
               $("#flashMessage").html(
-                `<div class="alert alert-danger" role="alert">${response.message}</div>`
+                `<div class="alert alert-danger" role="alert">${response?.responseJSON?.message}</div>`
               );
               $(".alert")
                 .delay(5000)
@@ -542,7 +552,7 @@
                   $(this).alert("close");
                 });
             },
-          })
+          });
         });
       });
     </script>

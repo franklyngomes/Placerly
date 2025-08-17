@@ -17,6 +17,7 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "joi": "^18.0.0",
     "jquery": "^3.7.1",
     "mongoose": "^8.17.1",
     "multer": "^2.0.2",

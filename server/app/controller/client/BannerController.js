@@ -1,5 +1,8 @@
 const HttpCode = require("../../helper/HttpCode");
-const BannerModel = require("../../model/client/BannerModel");
+const {
+  BannerModel,
+  BannerSchemaJoi,
+} = require("../../model/client/BannerModel");
 const fsSync = require("fs");
 const fs = require("fs").promises;
 
@@ -39,7 +42,9 @@ class BannerController {
       if (req.files && req.files.secondaryImage) {
         bannerData.secondaryImage = req.files.secondaryImage[0].path;
       }
-      const data = await bannerData.save();
+      const { error, value } = BannerSchemaJoi.validate(bannerData);
+      const data = await value.save();
+
       return res.status(HttpCode.create).json({
         status: true,
         message: "Banner added successfully!",
@@ -77,7 +82,24 @@ class BannerController {
   async updateBanner(req, res) {
     try {
       const id = req.params.id;
-      const updateData = await BannerModel.findByIdAndUpdate(id, req.body, {
+      let payload = { ...req.body };
+      // Converting string "true"/"false" to real boolean
+      if (payload.status === "true") payload.status = true;
+      if (payload.status === "false") payload.status = false;
+      const { error, value } = BannerSchemaJoi.validate(payload);
+      if (value.status === true) {
+        const checkActiveBanner = await BannerModel.findOne({
+          status: true,
+          _id: { $ne: id },
+        });
+        if (checkActiveBanner) {
+          return res.status(HttpCode.badRequest).json({
+            status: false,
+            message: "You cannot have more than one active banners",
+          });
+        }
+      }
+      const updateData = await BannerModel.findByIdAndUpdate(id, value, {
         new: true,
       });
       if (!updateData) {
@@ -99,7 +121,7 @@ class BannerController {
         }
       }
 
-      await updateData.save();
+      // await updateData.save();
       return res.status(HttpCode.success).json({
         status: true,
         message: "Banner updated successfully!",

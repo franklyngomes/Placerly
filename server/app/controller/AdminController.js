@@ -1,5 +1,5 @@
 const HttpCode = require("../helper/HttpCode");
-const BannerModel = require("../model/client/BannerModel");
+const {BannerModel} = require("../model/client/BannerModel");
 class AdminController {
   async DashboardPage(req, res) {
     try {
