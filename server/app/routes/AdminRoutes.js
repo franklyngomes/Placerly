@@ -10,6 +10,8 @@ const multer = require("multer");
 const AboutController = require("../controller/client/AboutController");
 const ServiceController = require("../controller/client/ServiceController");
 const TestimonialController = require("../controller/client/TestimonialController");
+const PricingController = require("../controller/client/PricingController")
+const FaqController = require("../controller/client/FaQController")
 const upload = multer();
 
 router.get("/", AdminController.DashboardPage);
@@ -45,5 +47,21 @@ router.get("/list-testimonial", TestimonialController.listTestimonial)
 router.get("/testimonial-details/:id", TestimonialController.testimonialDetails)
 router.patch("/testimonial-update/:id",TestimonialImageUpload.single("image"),TestimonialController.updateTestimonial)
 router.delete("/delete-testimonial/:id", TestimonialController.deleteTestimonial)
+
+//Pricing Routes
+router.get("/pricing", AdminController.PricingListPage)
+router.post("/add-pricing", upload.none(),PricingController.createPricing)
+router.get("/list-pricing", PricingController.listPricing)
+router.get("/pricing-details/:id",PricingController.pricingDetails)
+router.patch("/pricing-update/:id",upload.none(),PricingController.updatePricing)
+router.delete("/delete-pricing/:id", PricingController.deletePricing)
+
+//Faq Routes
+router.get("/faq", AdminController.FaqListPage)
+router.post("/add-faq", upload.none(),FaqController.createFaq)
+router.get("/list-faq", FaqController.listFaq)
+router.get("/faq-details/:id",FaqController.faqDetails)
+router.patch("/faq-update/:id",upload.none(),FaqController.updateFaq)
+router.delete("/delete-faq/:id", FaqController.deleteFaq)
 
 module.exports = router;

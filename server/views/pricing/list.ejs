@@ -63,7 +63,9 @@
           <div class="container-fluid">
             <div id="flashMessage" class="z-10"></div>
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800 font-weight-light">About</h1>
+            <h1 class="h3 mb-2 text-gray-800 font-weight-light">
+              All Pricing Plans
+            </h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -73,7 +75,7 @@
                   data-toggle="modal"
                   data-target="#createModal"
                 >
-                  Add About
+                  Add Pricing Plan
                 </button>
               </div>
 
@@ -88,30 +90,24 @@
                     <thead>
                       <tr>
                         <th>Sl No.</th>
-                        <th>Title</th>
-                        <th>Description One</th>
-                        <th>Description Two</th>
-                        <th>Mission</th>
-                        <th>Values</th>
-                        <th>Image</th>
-                        <th>Active Status</th>
+                        <th>Plan Name</th>
+                        <th>Description</th>
+                        <th>Price($)</th>
+                        <th>Features</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                         <th>Sl No.</th>
-                        <th>Title</th>
-                        <th>Description One</th>
-                        <th>Description Two</th>
-                        <th>Mission</th>
-                        <th>Values</th>
-                        <th>Image</th>
-                        <th>Active Status</th>
+                        <th>Plan Name</th>
+                        <th>Description</th>
+                        <th>Price($)</th>
+                        <th>Features</th>
                         <th>Actions</th>
                       </tr>
                     </tfoot>
-                    <tbody id="aboutTableBody"></tbody>
+                    <tbody id="pricingTableBody"></tbody>
                   </table>
                 </div>
               </div>
@@ -135,90 +131,51 @@
           <form
             action=""
             method="post"
-            id="about-form"
+            id="pricing-form"
             enctype="multipart/form-data"
           >
             <div class="modal-header">
-              <h5 class="modal-title">Add About</h5>
+              <h5 class="modal-title">Add Pricing Plan</h5>
               <button type="button" class="close" data-dismiss="modal">
                 <span>&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label>Title:</label>
-                <input type="text" class="form-control" name="title" required />
-              </div>
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label>Description One:</label>
-                  <textarea
-                    class="form-control"
-                    name="descriptionOne"
-                    required
-                  ></textarea>
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Description Two:</label>
-                  <textarea
-                    class="form-control"
-                    name="descriptionTwo"
-                    required
-                  ></textarea>
-                </div>
+                <label>Plan Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="planName"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label>Mission</label>
+                <label>Description:</label>
                 <textarea
                   class="form-control"
-                  name="mission"
+                  name="description"
                   required
                 ></textarea>
               </div>
               <div class="form-group">
-                <label>Values (Add upto 5): </label>
-                <div class="d-flex flex-wrap gap-2">
-                  <input
-                    type="text"
-                    class="form-control col-4"
-                    name="values"
-                    required
-                  />
-                  <input
-                    type="text"
-                    class="form-control col-4"
-                    name="values"
-                    required
-                  />
-                  <input
-                    type="text"
-                    class="form-control col-4"
-                    name="values"
-                    required
-                  />
-                  <input
-                    type="text"
-                    class="form-control col-4"
-                    name="values"
-                    required
-                  />
-                  <input
-                    type="text"
-                    class="form-control col-4"
-                    name="values"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Image:</label>
+                <label>Price($):</label>
                 <input
-                  type="file"
+                  type="number"
                   class="form-control"
-                  name="image"
-                  accept="image/*"
+                  name="price"
                   required
                 />
+              </div>
+              <div class="form-group">
+                <label>Features</label>
+                <div class="row w-100 m-auto d-flex gap-3">
+                  <input type="text" class="form-control" name="features" />
+                  <input type="text" class="form-control" name="features" />
+                  <input type="text" class="form-control" name="features" />
+                  <input type="text" class="form-control" name="features" />
+                  <input type="text" class="form-control" name="features" />
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -243,81 +200,48 @@
         <div class="modal-content">
           <form id="update-form" enctype="multipart/form-data">
             <div class="modal-header">
-              <h5 class="modal-title">Edit About</h5>
-              <button type="button" class="close" data-dismiss="modal">
+              <h5 class="modal-title">Edit Pricing Plan</h5>
+              <button
+                type="button"
+                class="close edit-modal-close"
+                data-dismiss="modal"
+              >
                 <span>&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label>Title:</label>
+                <label>Plan Name:</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="edit-title"
-                  name="title"
+                  name="planName"
                   required
+                  id="edit-planName"
                 />
               </div>
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label>Description One:</label>
-                  <textarea
-                    id="edit-descriptionOne"
-                    class="form-control"
-                    name="descriptionOne"
-                    required
-                  ></textarea>
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Description Two:</label>
-                  <textarea
-                    id="edit-descriptionTwo"
-                    class="form-control"
-                    name="descriptionTwo"
-                    required
-                  ></textarea>
-                </div>
-              </div>
               <div class="form-group">
-                <label>Mission</label>
+                <label>Description:</label>
                 <textarea
-                  id="edit-mission"
                   class="form-control"
-                  name="mission"
+                  name="description"
+                  id="edit-description"
                   required
                 ></textarea>
               </div>
               <div class="form-group">
-                <label>Values (Add upto 5): </label>
-                <div id="values-div"></div>
-              </div>
-              <div
-                class="form-group d-flex justify-content-start gap-3"
-                style="margin-left: 20px"
-              >
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    name="status"
-                    id="edit-status"
-                  />
-                  <label class="form-check-label" for="edit-status"
-                    >Make this banner active</label
-                  >
-                </div>
+                <label>Price($):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="price"
+                  id="edit-price"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label>Image:</label>
-                <input
-                  id="edit-image"
-                  type="file"
-                  class="form-control"
-                  name="image"
-                  accept="image/*"
-                />
+                <label>Features: </label>
+                <div id="features-div" class=""></div>
               </div>
             </div>
             <div class="modal-footer">
@@ -408,33 +332,26 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
     <script>
-      function loadAbout() {
+      function loadPricing() {
         $.ajax({
-          url: "/list-about",
+          url: "/list-pricing",
           type: "GET",
           success: function (response) {
-            const abouts = response.data;
-            const tbody = $("#aboutTableBody");
+            const pricing = response.data;
+            const tbody = $("#pricingTableBody");
             tbody.empty(); // clear old rows
 
-            abouts.map((item, index) => {
+            pricing.forEach((item, index) => {
               tbody.append(`
             <tr>
               <td>${index + 1}</td>
-              <td>${item.title}</td>
-              <td>${item.descriptionOne}</td>
-              <td>${item.descriptionTwo}</td>
-              <td>${item.mission}</td>
-              <td>${item?.values
+              <td>${item.planName}</td>
+              <td>${item.description}</td>
+              <td>${item.price}</td>
+              <td>${item?.features
                 .map((val, index) => `<li>${val}</li>`)
                 .join(" ")}</td>
-              <td> <img src="http://localhost:5000/${
-                item.image
-              }" alt="About Image" class="table-data-image" style="width: 100px" /> </td> 
-              <td> ${
-                item.status === true ? "<p>Active</p>" : "<p>Inactive</p>"
-              }</td>
-              <td>
+                 <td>
                  <button
                   class="btn btn-warning btn-sm edit-btn"
                   data-id="${item._id}"
@@ -455,7 +372,7 @@
           },
           error: function (xhr) {
             $("#flashMessage").html(
-              `<div class="alert alert-danger">Error loading about</div>`
+              `<div class="alert alert-danger">Error loading Pricing</div>`
             );
           },
         });
@@ -463,9 +380,9 @@
       //Delete Function
       $(document).on("click", ".delete-btn", function () {
         const id = $(this).data("id");
-        if (confirm("Are you sure you want to delete this about?")) {
+        if (confirm("Are you sure you want to delete this plan?")) {
           $.ajax({
-            url: `/delete-about/${id}`,
+            url: `/delete-pricing/${id}`,
             async: true,
             method: "DELETE",
             success: function (response) {
@@ -477,7 +394,7 @@
                 .slideUp(200, function () {
                   $(this).alert("close");
                 });
-              loadAbout();
+              loadPricing();
             },
             error: function (response) {
               $("#flashMessage").html(
@@ -492,17 +409,17 @@
           });
         }
       });
-      // load about when page loads
-      $(document).ready(loadAbout);
+      // load Service when page loads
+      $(document).ready(loadPricing);
     </script>
     <script>
       $(document).ready(function () {
         //Create Function
-        $("#about-form").submit(function (e) {
+        $("#pricing-form").submit(function (e) {
           e.preventDefault();
           let formData = new FormData(this);
           $.ajax({
-            url: "/add-about",
+            url: "/add-pricing",
             async: true,
             type: "POST",
             data: formData,
@@ -517,8 +434,8 @@
                 .slideUp(200, function () {
                   $(this).alert("close");
                 });
-              $("#about-form")[0].reset();
-              loadAbout();
+              $("#pricing-form")[0].reset();
+              loadPricing();
             },
             error: function (response) {
               $("#flashMessage").html(
@@ -529,45 +446,43 @@
                 .slideUp(200, function () {
                   $(this).alert("close");
                 });
-              $("#about-form")[0].reset();
+              $("#pricing-form")[0].reset();
             },
           });
         });
-        //Get About Details
+        //Get Banner Details
         $(document).on("click", ".edit-btn", function () {
           const id = $(this).data("id");
           $("#update-form").attr("data-id", id);
           $.ajax({
-            url: `/about-details/${id}`,
+            url: `/pricing-details/${id}`,
             async: true,
             method: "GET",
             success: function (response) {
-              const about = response.data;
-              $("#edit-title").val(about.title);
-              $("#edit-descriptionOne").val(about.descriptionOne);
-              $("#edit-descriptionTwo").val(about.descriptionTwo);
-              $("#edit-mission").val(about.mission);
-              $("#edit-status").prop("checked", about.status === true);
-              if (about?.values.length > 0) {
-                about.values.map((item, index) => {
-                  $("#values-div").append(
-                    `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values" value="${item}"/>`
+              const pricing = response.data;
+              $("#edit-planName").val(pricing.planName);
+              $("#edit-description").val(pricing.description);
+              $("#edit-price").val(pricing.price);
+              if (pricing?.features.length > 0) {
+                pricing.features.map((item, index) => {
+                  $("#features-div").append(
+                    `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features" value="${item}"/>`
                   );
                 });
-                if (about?.values.length < 5) {
-                  for (let i = about?.values.length; i < 5; i++) {
-                    $("#values-div").append(
-                      `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>`
+                if (pricing?.features.length < 5) {
+                  for (let i = pricing?.features.length; i < 5; i++) {
+                    $("#features-div").append(
+                      `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>`
                     );
                   }
                 }
               } else {
-                $("#values-div").append(
-                  `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>` +
-                    `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>` +
-                    `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>` +
-                    `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>` +
-                    `<input type="text" class="form-control appended-item my-3" name="values" id="edit-values"/>`
+                $("#features-div").append(
+                  `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>` +
+                    `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>` +
+                    `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>` +
+                    `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>` +
+                    `<input type="text" class="form-control appended-item my-3" name="features" id="edit-features"/>`
                 );
               }
             },
@@ -575,27 +490,23 @@
         });
         $("#editModal").on("hidden.bs.modal", function () {
           $("#update-form").removeAttr("data-id")[0].reset();
-          $("#values-div .appended-item").remove();
+          $("#features-div .appended-item").remove();
           $("#edit-status").prop("checked", false);
         });
-        // Update About
+        //Update Pricing
         $("#update-form").submit(function (e) {
           e.preventDefault();
           const id = $("#update-form").attr("data-id");
+          let features = [];
           const formData = new FormData(this);
-          let valuesArr = [];
-          formData.set("status", $("#edit-status").is(":checked"));
-          $("#values-div .appended-item").each(function () {
+          $("#features-div .appended-item").each(function () {
             const val = $(this).val().trim();
-            if (val) valuesArr.push(val);
+            if (val) features.push(val);
           });
-          formData.delete("values");
-          valuesArr.forEach((f) => formData.append("values", f));
-          for (let pair of formData.entries()) {
-            console.log(pair[0] + ": " + pair[1]);
-          }
+          formData.delete("features");
+          features.forEach((f) => formData.append("features", f));
           $.ajax({
-            url: `/about-update/${id}`,
+            url: `/pricing-update/${id}`,
             async: true,
             data: formData,
             type: "PATCH",
@@ -610,7 +521,7 @@
                 .slideUp(200, function () {
                   $(this).alert("close");
                 });
-              loadAbout();
+              loadPricing();
             },
             error: function (response) {
               $("#flashMessage").html(

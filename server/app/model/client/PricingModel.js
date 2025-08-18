@@ -1,27 +1,30 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Joi  = require('joi')
 
+const PricingSchemaJoi = Joi.object({
+  planName: Joi.string().min(5).max(15).required(),
+  description: Joi.string().min(8).max(15).required(),
+  price: Joi.number().required(),
+  features: Joi.array().items(Joi.string()).optional(),
+})
 const PricingSchema = new Schema(
   {
-    title: {
+    planName: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
-      required: true,
     },
     price: {
       type: Number,
-      required: true,
     },
     features:{
       type: [String],
-      required: true,
     } 
   },
   { timestamps: true }
 );
 
 const PricingModel = mongoose.model('pricing', PricingSchema)
-module.exports = PricingModel
+module.exports = {PricingModel, PricingSchemaJoi}
