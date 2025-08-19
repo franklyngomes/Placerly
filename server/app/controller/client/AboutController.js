@@ -25,6 +25,27 @@ class AboutController {
       });
     }
   }
+    async listActiveAbout(req, res) {
+    try {
+      const about = await AboutModel.findOne({status: true});
+      if (!about) {
+        return res.status(HttpCode.notFound).json({
+          status: false,
+          message: "No available about documents",
+        });
+      }
+      return res.status(HttpCode.success).json({
+        status: false,
+        message: "About documents fetched successfully!",
+        data: about,
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
   async createAbout(req, res) {
     try {
       const { title, descriptionOne, descriptionTwo, mission, values } =

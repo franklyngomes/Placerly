@@ -1,10 +1,12 @@
+"use client"
 import HomePage from "@/components/HomePage";
-import Image from "next/image";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+export const queryClient = new QueryClient()
 export default function Home() {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <HomePage/>
-    </div>
+    </QueryClientProvider>
   );
 }

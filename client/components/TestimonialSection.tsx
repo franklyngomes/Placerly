@@ -1,7 +1,10 @@
 "use client";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
+// import Masonry from 'react-layout-masonry';
 
+const Masonry = dynamic(() => import("react-layout-masonry"), { ssr: false });
 const TestimonialSection = () => {
   return (
     <div>
@@ -25,9 +28,9 @@ const TestimonialSection = () => {
               </p>
             </div>
           </div>
-          <div className="row g-4" data-masonry={{percentPosition: true}}>
+            <Masonry columns={{ 400: 1, 640: 2, 768: 3, 1024: 3, 1280: 3 }} gap={16}>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="0"
             >
@@ -56,7 +59,7 @@ const TestimonialSection = () => {
               </div>
             </div>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="100"
             >
@@ -85,7 +88,7 @@ const TestimonialSection = () => {
               </div>
             </div>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="200"
             >
@@ -116,7 +119,7 @@ const TestimonialSection = () => {
               </div>
             </div>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="300"
             >
@@ -145,7 +148,7 @@ const TestimonialSection = () => {
               </div>
             </div>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="400"
             >
@@ -173,7 +176,7 @@ const TestimonialSection = () => {
               </div>
             </div>
             <div
-              className="col-md-6 col-lg-4"
+              className=""
               data-aos="fade-up"
               data-aos-delay="500"
             >
@@ -201,7 +204,7 @@ const TestimonialSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </Masonry>
         </div>
       </section>
     </div>

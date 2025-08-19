@@ -20,6 +20,7 @@ router.get("/", AdminController.DashboardPage);
 router.get("/banner", AdminController.BannerListPage);
 router.post("/add-banner",BannerImageUpload.fields([{name: "primaryImage",maxCount: 1,},{name: "secondaryImage",maxCount: 1,}]),BannerController.createBanner);
 router.get("/list-banner", BannerController.listBanner)
+router.get("/list-active-banner", BannerController.listActiveBanner)
 router.get("/banner-details/:id",BannerController.bannerDetails)
 router.patch("/banner-update/:id", BannerImageUpload.fields([{name: "primaryImage",maxCount: 1,},{name: "secondaryImage",maxCount: 1,}]), BannerController.updateBanner)
 router.delete('/delete-banner/:id', BannerController.deleteBanner)
@@ -28,6 +29,7 @@ router.delete('/delete-banner/:id', BannerController.deleteBanner)
 router.get("/about", AdminController.AboutListPage)
 router.post("/add-about",AboutImageUpload.single('image'), AboutController.createAbout)
 router.get("/list-about", AboutController.listAbout)
+router.get("/list-active-about", AboutController.listActiveAbout)
 router.get("/about-details/:id", AboutController.aboutDetails)
 router.patch("/about-update/:id",AboutImageUpload.single("image"), AboutController.updateAbout)
 router.delete("/delete-about/:id", AboutController.deleteAbout)

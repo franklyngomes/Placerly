@@ -28,6 +28,27 @@ class BannerController {
       });
     }
   }
+  async listActiveBanner(req, res){
+    try {
+      const banners = await BannerModel.findOne({status: true});
+      if (!banners) {
+        return res.status(HttpCode.notFound).json({
+          status: false,
+          message: "No active banners",
+        });
+      }
+      return res.status(HttpCode.success).json({
+        status: false,
+        message: "Banners fetched successfully!",
+        data: banners,
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
   async createBanner(req, res) {
     try {
       const { title, subtitle, description } = req.body;

@@ -1,7 +1,12 @@
 "use client";
+import { AboutQuery } from "@/api/query/ClientQuery";
+import Image from "next/image";
 import React from "react";
 
 const AboutSection = () => {
+  const {data} = AboutQuery()
+  const about = data?.data
+  console.log(about)
   return (
     <div>
       <section className="about__v4 section" id="about">
@@ -18,20 +23,14 @@ const AboutSection = () => {
                     About us
                   </span>
                   <h2 className="mb-4" data-aos="fade-up" data-aos-delay="100">
-                    Experience the future of finance with our secure, efficient,
-                    and user-friendly financial services
+                    {about?.title}
                   </h2>
                   <div data-aos="fade-up" data-aos-delay="200">
                     <p>
-                      Founded with the vision of revolutionizing the financial
-                      industry, we are a leading fintech company dedicated to
-                      providing innovative and secure financial solutions.
+                      {about?.descriptionOne}
                     </p>
                     <p>
-                      Our cutting-edge platform ensures your transactions are
-                      safe, streamlined, and easy to manage, empowering you to
-                      take control of your financial journey with confidence and
-                      convenience.
+                      {about?.descriptionTwo}
                     </p>
                   </div>
                   <h4
@@ -82,12 +81,16 @@ const AboutSection = () => {
             </div>
             <div className="col-md-6">
               <div className="img-wrap position-relative">
-                <img
+                <Image
                   className="img-fluid rounded-4"
-                  src="/assets/images/about_2-min.jpg"
+                  src={`http://localhost:5000/${about?.image}`}
                   alt="FreeBootstrap.net image placeholder"
                   data-aos="fade-up"
                   data-aos-delay="0"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{width: "100%", height: "auto"}}
                 />
                 <div
                   className="mission-statement p-4 rounded-4 d-flex gap-4"
