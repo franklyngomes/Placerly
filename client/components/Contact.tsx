@@ -48,7 +48,7 @@ const Contact = () => {
                 >
                   <div className="icon d-block"><i className="bi bi-send"></i></div>
                   <span>
-                    <span className="d-block">Email</span><strong>info@mydomain.com</strong></span>
+                    <span className="d-block">Email</span><strong>support@placerly.com</strong></span>
                 </div>
                 <div
                   className="d-flex align-items-start gap-3"

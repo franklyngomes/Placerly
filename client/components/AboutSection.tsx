@@ -6,7 +6,6 @@ import React from "react";
 const AboutSection = () => {
   const {data} = AboutQuery()
   const about = data?.data
-  console.log(about)
   return (
     <div>
       <section className="about__v4 section" id="about">
@@ -45,36 +44,14 @@ const AboutSection = () => {
                     data-aos="fade-up"
                     data-aos-delay="400"
                   >
-                    <li className="d-flex align-items-center gap-2">
+                    {about?.values?.map((item, index) => (
+                    <li key={index} className="d-flex align-items-center gap-2">
                       <span className="icon rounded-circle text-center">
                         <i className="bi bi-check"></i>
                       </span>
-                      <span className="text">Innovation</span>
+                      <span className="text">{item}</span>
                     </li>
-                    <li className="d-flex align-items-center gap-2">
-                      <span className="icon rounded-circle text-center">
-                        <i className="bi bi-check"></i>
-                      </span>
-                      <span className="text">Security</span>
-                    </li>
-                    <li className="d-flex align-items-center gap-2">
-                      <span className="icon rounded-circle text-center">
-                        <i className="bi bi-check"></i>
-                      </span>
-                      <span className="text">User-Centric Design </span>
-                    </li>
-                    <li className="d-flex align-items-center gap-2">
-                      <span className="icon rounded-circle text-center">
-                        <i className="bi bi-check"></i>
-                      </span>
-                      <span className="text">Transparency</span>
-                    </li>
-                    <li className="d-flex align-items-center gap-2">
-                      <span className="icon rounded-circle text-center">
-                        <i className="bi bi-check"></i>
-                      </span>
-                      <span className="text">Empowerment</span>
-                    </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -105,9 +82,7 @@ const AboutSection = () => {
                       Mission Statement
                     </h3>
                     <p className="fs-5 mb-0">
-                      Our mission is to empower individuals and businesses by
-                      delivering secure, efficient, and user-friendly financial
-                      services.
+                      {about?.mission}
                     </p>
                   </div>
                 </div>

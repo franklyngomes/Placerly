@@ -32,7 +32,7 @@ class ServiceController {
         title, description, url
       });
       if (req.file) {
-        serviceData.image = req.file.path;
+        serviceData.image = req.file.path.replace(/\\/g, "/");
       }
       const { error, value } = ServiceSchemaJoi.validate(serviceData);
       const data = await value.save();
@@ -75,23 +75,22 @@ class ServiceController {
     try {
       const id = req.params.id;
       const { error, value } = ServiceSchemaJoi.validate(req.body);
-      const updateData = await ServiceModel.findByIdAndUpdate(id, value, {
-        new: true,
-      });
-      if (!updateData) {
+      const service = await ServiceModel.findById(id);
+      if (!service) {
         return res.status(HttpCode.notFound).json({
           message: "Service not found!",
         });
       }
-      if (req.files && req.files.image) {
-        if (updateData.image) {
-          if (fsSync.existsSync(updateData.image)) {
-            await fs.unlink(updateData.image);
+      Object.assign(service, value)
+      if (req.file) {
+        if (service.image) {
+          if (fsSync.existsSync(service.image)) {
+            await fs.unlink(service.image);
           }
-          updateData.image = req.files.image[0].path;
         }
+        service.image = req.file.path.replace(/\\/g, "/");
       }
-      await updateData.save();
+      await service.save();
       return res.status(HttpCode.success).json({
         status: true,
         message: "Service updated successfully!",
