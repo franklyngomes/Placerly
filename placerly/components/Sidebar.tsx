@@ -22,12 +22,12 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/placerly/dashboard", icon: LayoutDashboard },
-  { name: "Assets", href: "/placerly/assets", icon: Banknote },
-  { name: "Debts", href: "/placerly/debts", icon: CreditCard },
-  { name: "Insurances", href: "/placerly/insurances", icon: ShieldCheck },
-  { name: "Utilities", href: "/placerly/utilities", icon: PlugZap },
-  { name: "Transition", href: "/placerly/transition", icon: UserRoundCheck },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "Assets", href: "/assets", icon: Banknote },
+  { name: "Debts", href: "/debts", icon: CreditCard },
+  { name: "Insurances", href: "/insurance", icon: ShieldCheck },
+  { name: "Utilities", href: "/utilities", icon: PlugZap },
+  { name: "Transition", href: "/transition", icon: UserRoundCheck },
 ];
 
 export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
@@ -44,8 +44,8 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
       {/* Header */}
       <div className="px-5 py-4 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-md bg-indigo-500/20 ring-1 ring-indigo-400/30 flex items-center justify-center">
-            <span className="text-indigo-300 text-sm font-semibold tracking-tight">FH</span>
+          <div className="h-8 w-8 rounded-md bg-custom-500/20 ring-1 ring-custom-400/30 flex items-center justify-center">
+            <span className="text-custom-300 text-sm font-semibold tracking-tight">FH</span>
           </div>
           <div className="text-sm">
             <div className="text-neutral-100 font-semibold tracking-tight leading-5">

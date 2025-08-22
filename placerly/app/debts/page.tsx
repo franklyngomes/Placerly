@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { AccountsList } from "@/components/placerly/AccountsList";
-import { SuggestionsDropdown } from "@/components/placerly/SuggestionsDropdown";
+import { AccountsList } from "@/components/AccountsList";
+import { SuggestionsDropdown } from "@/components/SuggestionsDropdown";
 import { useFinancialStore } from "@/stores/financialStore";
 
 const creditProviders = [
@@ -15,7 +15,7 @@ const mortgageProviders = [
   "Santander", "Halifax", "Barclays", "HSBC", "Lloyds"
 ];
 
-export function Debts() {
+function Debts() {
   const { getAccounts, addAccount } = useFinancialStore();
   const [creditSearch, setCreditSearch] = useState("");
   const [mortgageSearch, setMortgageSearch] = useState("");
@@ -61,7 +61,7 @@ export function Debts() {
                 onChange={(e) => setCreditSearch(e.target.value)}
                 onFocus={() => setShowCreditSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowCreditSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showCreditSuggestions && (
                 <SuggestionsDropdown
@@ -98,7 +98,7 @@ export function Debts() {
                 onChange={(e) => setMortgageSearch(e.target.value)}
                 onFocus={() => setShowMortgageSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowMortgageSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showMortgageSuggestions && (
                 <SuggestionsDropdown
@@ -121,3 +121,4 @@ export function Debts() {
     </>
   );
 }
+export default Debts

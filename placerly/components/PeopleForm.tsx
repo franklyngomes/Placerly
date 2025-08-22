@@ -40,7 +40,7 @@ export function PeopleForm({ type, onSubmit }: PeopleFormProps) {
           placeholder="Full name"
           value={formData.name}
           onChange={(e) => handleChange('name', e.target.value)}
-          className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
+          className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
         />
       </div>
       
@@ -55,7 +55,7 @@ export function PeopleForm({ type, onSubmit }: PeopleFormProps) {
             placeholder="name@example.com"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
+            className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
           />
         </div>
         
@@ -69,7 +69,7 @@ export function PeopleForm({ type, onSubmit }: PeopleFormProps) {
             placeholder="+44 0000 000000"
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
-            className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
+            className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
           />
         </div>
       </div>
@@ -77,7 +77,7 @@ export function PeopleForm({ type, onSubmit }: PeopleFormProps) {
       <div className="flex items-center gap-2">
         <button
           type="submit"
-          className="px-3 py-2.5 rounded-md bg-indigo-600/90 hover:bg-indigo-500 text-[13px] font-medium outline outline-1 outline-indigo-400/40 transition-colors"
+          className="px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 text-[13px] font-medium outline outline-1 outline-custom-400/40 transition-colors"
         >
           Add {type}
         </button>

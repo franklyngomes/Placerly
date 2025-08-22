@@ -1,8 +1,8 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Search, Plus, Building2, Banknote, CreditCard, ShieldCheck, PlugZap, Link as LinkIcon, FilePlus2, UserRoundPlus } from "lucide-react";
-import { ActivityChart } from "@/components/placerly/ActivityChart";
+import { Search, Plus, Banknote, CreditCard, ShieldCheck, PlugZap, Link as LinkIcon, FilePlus2, UserRoundPlus } from "lucide-react";
+import { ActivityChart } from "@/components/ActivityChart";
 import { useFinancialStore } from "@/stores/financialStore";
 
 const organizationData = {
@@ -16,7 +16,7 @@ const organizationData = {
   water: ["Thames Water", "Severn Trent", "Scottish Water"]
 };
 
-export function Placerly() {
+function Placerly() {
   const { getCounts, getConnectedCounts, getRecentPeople } = useFinancialStore();
   const [quickCategory, setQuickCategory] = useState<string>("assets.cash");
   const [quickInput, setQuickInput] = useState("");
@@ -51,13 +51,13 @@ export function Placerly() {
             <input 
               type="text" 
               placeholder="Search across assets, debts, insurers..."
-              className="w-[280px] bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-10 py-2.5 text-[13px] text-neutral-100" 
+              className="w-[280px] bg-white/5 outline outline-white/10 placeholder:text-neutral-500 rounded-md pl-9 pr-10 py-2.5 text-[13px] text-neutral-100" 
             />
-            <button className="absolute right-1.5 top-1.5 px-2 py-1 text-xs rounded bg-white/5 hover:bg-white/10 outline outline-1 outline-white/10">
+            <button className="absolute right-1.5 top-1.5 px-2 py-1 text-xs rounded bg-white/5 hover:bg-white/10 outline outline-white/10">
               Go
             </button>
           </div>
-          <button className="px-3 py-2 rounded-md bg-indigo-600/90 hover:bg-indigo-500 text-[13px] font-medium outline outline-1 outline-indigo-400/40">
+          <button className="px-3 py-2 rounded-md bg-custom-600 hover:bg-custom-500 text-[13px] font-medium outline outline-custom-600">
             <div className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Quick Add
@@ -82,7 +82,7 @@ export function Placerly() {
             </div>
             
             <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
+              <div className="rounded-lg bg-white/[0.04] outline  outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-neutral-400">Assets</span>
                   <Banknote className="h-4 w-4 text-neutral-300" />
@@ -93,7 +93,7 @@ export function Placerly() {
                 <div className="text-xs text-neutral-500 mt-1">Cash & Shares</div>
               </div>
 
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
+              <div className="rounded-lg bg-white/[0.04] outline outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-neutral-400">Debts</span>
                   <CreditCard className="h-4 w-4 text-neutral-300" />
@@ -104,7 +104,7 @@ export function Placerly() {
                 <div className="text-xs text-neutral-500 mt-1">Cards & Mortgages</div>
               </div>
 
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
+              <div className="rounded-lg bg-white/[0.04] outline outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-neutral-400">Insurances</span>
                   <ShieldCheck className="h-4 w-4 text-neutral-300" />
@@ -115,7 +115,7 @@ export function Placerly() {
                 <div className="text-xs text-neutral-500 mt-1">Life & Home</div>
               </div>
 
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
+              <div className="rounded-lg bg-white/[0.04] outline outline-white/10 p-4 hover:outline-white/20 hover:-translate-y-0.5 transition">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-neutral-400">Utilities</span>
                   <PlugZap className="h-4 w-4 text-neutral-300" />
@@ -129,11 +129,11 @@ export function Placerly() {
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Activity Chart */}
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4">
+              <div className="rounded-lg bg-white/[0.04] outline outline-white/10 p-4">
                 <h3 className="text-[15px] font-medium tracking-tight">Link activity</h3>
                 <p className="text-xs text-neutral-400 mt-1">Recent additions by category</p>
                 <div className="mt-3">
-                  <div className="relative rounded-md outline outline-1 outline-white/10 p-3 bg-white/[0.03]">
+                  <div className="relative rounded-md outline outline-white/10 p-3 bg-white/[0.03]">
                     <div className="text-xs text-neutral-400">Last 14 days</div>
                     <div className="mt-3 h-36">
                       <ActivityChart />
@@ -143,30 +143,30 @@ export function Placerly() {
               </div>
 
               {/* Upcoming Tasks */}
-              <div className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-4">
+              <div className="rounded-lg bg-white/[0.04] outline outline-white/10 p-4">
                 <h3 className="text-[15px] font-medium tracking-tight">Upcoming tasks</h3>
                 <p className="text-xs text-neutral-400 mt-1">Complete your setup</p>
                 <ul className="mt-3 space-y-2">
-                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3 hover:outline-white/20">
+                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
                       <LinkIcon className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Link a cash account</span>
                     </div>
-                    <Link href="/placerly/assets" className="text-xs text-indigo-300 hover:text-indigo-200">Go</Link>
+                    <Link href="/assets" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
-                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3 hover:outline-white/20">
+                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
                       <FilePlus2 className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Add life insurance</span>
                     </div>
-                    <Link href="/placerly/insurances" className="text-xs text-indigo-300 hover:text-indigo-200">Go</Link>
+                    <Link href="/insurances" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
-                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3 hover:outline-white/20">
+                  <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
                       <UserRoundPlus className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Add an executor</span>
                     </div>
-                    <Link href="/placerly/transition" className="text-xs text-indigo-300 hover:text-indigo-200">Go</Link>
+                    <Link href="/transition" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
                 </ul>
               </div>
@@ -180,11 +180,11 @@ export function Placerly() {
 
             <div className="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {Object.entries(organizationData).map(([category, orgs]) => (
-                <div key={category} className="rounded-lg bg-white/[0.04] outline outline-1 outline-white/10 p-3">
+                <div key={category} className="rounded-lg bg-white/[0.04] outline outline-white/10 p-3">
                   <div className="text-[11px] text-neutral-400 capitalize">{category}</div>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {orgs.map((org) => (
-                      <span key={org} className="px-2 py-1 rounded-md text-xs bg-white/[0.06] outline outline-1 outline-white/10">
+                      <span key={org} className="px-2 py-1 rounded-md text-xs bg-white/[0.06] outline outline-white/10">
                         {org}
                       </span>
                     ))}
@@ -207,8 +207,8 @@ export function Placerly() {
                   <button
                     key={cat.id}
                     onClick={() => setQuickCategory(cat.id)}
-                    className={`px-3 py-2 text-xs rounded-md bg-white/[0.04] outline outline-1 outline-white/10 hover:bg-white/[0.08] ${
-                      quickCategory === cat.id ? 'ring-1 ring-indigo-400/40 bg-white/[0.08]' : ''
+                    className={`px-3 py-2 text-xs rounded-md bg-white/[0.04] outline outline-white/10 hover:bg-white/[0.08] ${
+                      quickCategory === cat.id ? 'ring-1 ring-custom-400/40 bg-white/[0.08]' : ''
                     }`}
                   >
                     {cat.label}
@@ -223,10 +223,10 @@ export function Placerly() {
                   onChange={(e) => setQuickInput(e.target.value)}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
+                  className="w-full bg-white/5 outline outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
                 />
               </div>
-              <button className="mt-3 w-full px-3 py-2.5 rounded-md bg-indigo-600/90 hover:bg-indigo-500 text-[13px] font-medium outline outline-1 outline-indigo-400/40">
+              <button className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 text-[13px] font-medium outline  outline-custom-400/40">
                 Link selected
               </button>
             </div>
@@ -241,15 +241,15 @@ export function Placerly() {
                 <div className="text-xs text-neutral-500 px-3 py-2">No people added yet.</div>
               ) : (
                 people.map((person) => (
-                  <div key={person.email} className="flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3">
+                  <div key={person.email} className="flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-white/10 p-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 text-xs outline outline-1 outline-indigo-400/30">
+                      <div className="h-8 w-8 rounded-full bg-custom-500/20 flex items-center justify-center text-custom-300 text-xs outline outline-custom-400/30">
                         {person.name.slice(0, 1).toUpperCase()}
                       </div>
                       <div className="text-[13px]">{person.name}</div>
                     </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] bg-white/[0.04] outline outline-1 outline-white/10 ${
-                      person.type === 'executor' ? 'text-indigo-300' : 'text-emerald-300'
+                    <span className={`px-2 py-0.5 rounded-full text-[11px] bg-white/[0.04] outline  outline-white/10 ${
+                      person.type === 'executor' ? 'text-custom-300' : 'text-emerald-300'
                     }`}>
                       {person.type === 'executor' ? 'Executor' : 'Beneficiary'}
                     </span>
@@ -259,7 +259,7 @@ export function Placerly() {
             </div>
             <Link 
               href="/placerly/transition"
-              className="mt-3 w-full px-3 py-2.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] outline outline-1 outline-white/10 text-[13px] block text-center"
+              className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 outline outline-custom-400/40 text-[13px] block text-center"
             >
               Manage in Transition
             </Link>
@@ -269,3 +269,4 @@ export function Placerly() {
     </>
   );
 }
+export default Placerly

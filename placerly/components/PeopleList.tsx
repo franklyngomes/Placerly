@@ -50,11 +50,11 @@ export function PeopleList({ people, type }: PeopleListProps) {
           <div
             key={person.email}
             className={`flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3 transition-all ${
-              person.status === 'Access granted' ? 'ring-1 ring-indigo-400/30' : ''
+              person.status === 'Access granted' ? 'ring-1 ring-custom-400/30' : ''
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 text-xs outline outline-1 outline-indigo-400/30">
+              <div className="h-8 w-8 rounded-full bg-custom-500/20 flex items-center justify-center text-custom-300 text-xs outline outline-1 outline-custom-400/30">
                 {person.name.slice(0, 1).toUpperCase()}
               </div>
               <div>

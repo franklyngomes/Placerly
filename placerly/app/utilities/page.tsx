@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { AccountsList } from "@/components/placerly/AccountsList";
-import { SuggestionsDropdown } from "@/components/placerly/SuggestionsDropdown";
+import { AccountsList } from "@/components/AccountsList";
+import { SuggestionsDropdown } from "@/components/SuggestionsDropdown";
 import { useFinancialStore } from "@/stores/financialStore";
 
 const energyProviders = [
@@ -15,7 +15,7 @@ const waterProviders = [
   "South East Water", "Southern Water", "Thames Water", "Yorkshire Water"
 ];
 
-export function Utilities() {
+function Utilities() {
   const { getAccounts, addAccount } = useFinancialStore();
   const [energySearch, setEnergySearch] = useState("");
   const [waterSearch, setWaterSearch] = useState("");
@@ -63,7 +63,7 @@ export function Utilities() {
                 onChange={(e) => setEnergySearch(e.target.value)}
                 onFocus={() => setShowEnergySuggestions(true)}
                 onBlur={() => setTimeout(() => setShowEnergySuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showEnergySuggestions && (
                 <SuggestionsDropdown
@@ -100,7 +100,7 @@ export function Utilities() {
                 onChange={(e) => setWaterSearch(e.target.value)}
                 onFocus={() => setShowWaterSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowWaterSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showWaterSuggestions && (
                 <SuggestionsDropdown
@@ -123,3 +123,4 @@ export function Utilities() {
     </>
   );
 }
+export default Utilities

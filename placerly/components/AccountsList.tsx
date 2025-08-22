@@ -56,7 +56,7 @@ export function AccountsList({ accounts, category }: AccountsListProps) {
           return (
             <div
               key={`${category}-${account.name}`}
-              className={`group flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-1 outline-white/10 p-3 hover:bg-white/[0.04] hover:outline-white/20 transition ${
+              className={`group flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:bg-white/[0.04] hover:outline-white/20 transition ${
                 account.isConnected ? 'ring-1 ring-emerald-500/30' : ''
               }`}
             >
@@ -96,7 +96,7 @@ export function AccountsList({ accounts, category }: AccountsListProps) {
                 {account.isConnected && (
                   <button
                     onClick={() => handleConnect(account)}
-                    className="px-2.5 py-1.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] outline outline-1 outline-white/10 text-xs transition-colors"
+                    className="px-2.5 py-1.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] outline outline-white/10 text-xs transition-colors"
                   >
                     Manage
                   </button>
@@ -105,7 +105,7 @@ export function AccountsList({ accounts, category }: AccountsListProps) {
                 {account.isConnected && (
                   <button
                     onClick={() => handleDisconnect(account.name)}
-                    className="px-2.5 py-1.5 rounded-md bg-red-500/10 hover:bg-red-500/20 outline outline-1 outline-red-500/20 text-xs text-red-300 transition-colors"
+                    className="px-2.5 py-1.5 rounded-md bg-red-500/10 hover:bg-red-500/20 outline outline-red-500/20 text-xs text-red-300 transition-colors"
                   >
                     Disconnect
                   </button>
@@ -114,7 +114,7 @@ export function AccountsList({ accounts, category }: AccountsListProps) {
                 {!account.isConnected && (
                   <button
                     onClick={() => handleConnect(account)}
-                    className="px-2.5 py-1.5 rounded-md bg-indigo-600/20 hover:bg-indigo-600/30 outline outline-1 outline-indigo-500/30 text-xs text-indigo-300 transition-colors"
+                    className="px-2.5 py-1.5 rounded-md bg-custom-600/20 hover:bg-custom-600/30 outline outline-custom-500/30 text-xs text-custom-300 transition-colors"
                   >
                     Connect
                   </button>
@@ -122,7 +122,7 @@ export function AccountsList({ accounts, category }: AccountsListProps) {
 
                 <button
                   onClick={() => handleRemove(account.name)}
-                  className="p-2 rounded-md hover:bg-white/[0.06] outline outline-1 outline-white/10 transition-colors"
+                  className="p-2 rounded-md hover:bg-white/[0.06] outline outline-white/10 transition-colors"
                   aria-label="Remove account"
                 >
                   <Trash2 className="h-4 w-4 text-neutral-300" />

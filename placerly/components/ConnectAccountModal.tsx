@@ -72,13 +72,13 @@ export function ConnectAccountModal({
   const getAccountIcon = () => {
     switch (accountType) {
       case 'credit':
-        return <CreditCard className="h-5 w-5 text-indigo-400" />;
+        return <CreditCard className="h-5 w-5 text-custom-400" />;
       case 'cash':
       case 'stocks':
       case 'mortgage':
-        return <Building2 className="h-5 w-5 text-indigo-400" />;
+        return <Building2 className="h-5 w-5 text-custom-400" />;
       default:
-        return <Lock className="h-5 w-5 text-indigo-400" />;
+        return <Lock className="h-5 w-5 text-custom-400" />;
     }
   };
 
@@ -130,7 +130,7 @@ export function ConnectAccountModal({
                 placeholder="Enter your username or email"
                 value={credentials.username}
                 onChange={(e) => handleChange('username', e.target.value)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export function ConnectAccountModal({
                 placeholder="Enter your password"
                 value={credentials.password}
                 onChange={(e) => handleChange('password', e.target.value)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
               />
             </div>
           </div>
@@ -166,17 +166,17 @@ export function ConnectAccountModal({
                   placeholder="Last 4 digits or full account number"
                   value={credentials.accountNumber}
                   onChange={(e) => handleChange('accountNumber', e.target.value)}
-                  className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
+                  className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-10 pr-3 py-3 text-sm text-neutral-100"
                 />
               </div>
             </div>
           )}
 
           {/* Security Notice */}
-          <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-3">
+          <div className="bg-custom-500/10 border border-custom-500/20 rounded-lg p-3">
             <div className="flex items-start gap-2">
-              <Lock className="h-4 w-4 text-indigo-400 mt-0.5 shrink-0" />
-              <div className="text-xs text-indigo-200">
+              <Lock className="h-4 w-4 text-custom-400 mt-0.5 shrink-0" />
+              <div className="text-xs text-custom-200">
                 Your credentials are encrypted and securely stored. We use bank-level security to protect your information.
               </div>
             </div>
@@ -194,7 +194,7 @@ export function ConnectAccountModal({
             <button
               type="submit"
               disabled={isConnecting || !credentials.username || !credentials.password}
-              className="flex-1 px-4 py-3 rounded-md bg-indigo-600/90 hover:bg-indigo-500 disabled:bg-neutral-700 disabled:text-neutral-500 outline outline-1 outline-indigo-400/40 disabled:outline-neutral-600 text-sm font-medium transition-colors"
+              className="flex-1 px-4 py-3 rounded-md bg-custom-600/90 hover:bg-custom-500 disabled:bg-neutral-700 disabled:text-neutral-500 outline outline-1 outline-custom-400/40 disabled:outline-neutral-600 text-sm font-medium transition-colors"
             >
               {isConnecting ? 'Connecting...' : 'Connect Account'}
             </button>

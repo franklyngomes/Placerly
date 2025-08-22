@@ -1,9 +1,9 @@
 "use client"
-import { PeopleForm } from "@/components/placerly/PeopleForm";
-import { PeopleList } from "@/components/placerly/PeopleList";
+import { PeopleForm } from "@/components/PeopleForm";
+import { PeopleList } from "@/components/PeopleList";
 import { useFinancialStore } from "@/stores/financialStore";
 
-export function Transition() {
+function Transition() {
   const { getExecutors, getBeneficiaries, addExecutor, addBeneficiary } = useFinancialStore();
   
   const executors = getExecutors();
@@ -64,3 +64,4 @@ export function Transition() {
     </>
   );
 }
+export default Transition

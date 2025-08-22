@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { AccountsList } from "@/components/placerly/AccountsList";
-import { SuggestionsDropdown } from "@/components/placerly/SuggestionsDropdown";
+import { AccountsList } from "@/components/AccountsList";
+import { SuggestionsDropdown } from "@/components/SuggestionsDropdown";
 import { useFinancialStore } from "@/stores/financialStore";
 
 const cashProviders = [
@@ -15,7 +15,7 @@ const stocksProviders = [
   "Wealthify", "Hargreaves Lansdown", "Interactive Investor"
 ];
 
-export function Assets() {
+ function Assets() {
   const { getAccounts, addAccount } = useFinancialStore();
   const [cashSearch, setCashSearch] = useState("");
   const [stocksSearch, setStocksSearch] = useState("");
@@ -66,7 +66,7 @@ export function Assets() {
                 onChange={(e) => setCashSearch(e.target.value)}
                 onFocus={() => setShowCashSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowCashSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showCashSuggestions && (
                 <SuggestionsDropdown
@@ -106,7 +106,7 @@ export function Assets() {
                 onChange={(e) => setStocksSearch(e.target.value)}
                 onFocus={() => setShowStocksSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowStocksSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showStocksSuggestions && (
                 <SuggestionsDropdown
@@ -129,4 +129,5 @@ export function Assets() {
     </>
   );
 }
+export default Assets
 

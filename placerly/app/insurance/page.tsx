@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { AccountsList } from "@/components/placerly/AccountsList";
-import { SuggestionsDropdown } from "@/components/placerly/SuggestionsDropdown";
+import { AccountsList } from "@/components/AccountsList";
+import { SuggestionsDropdown } from "@/components/SuggestionsDropdown";
 import { useFinancialStore } from "@/stores/financialStore";
 
 const lifeProviders = [
@@ -15,7 +15,7 @@ const homeProviders = [
   "Liverpool Victoria", "Swinton Insurance"
 ];
 
-export function Insurances() {
+function Insurances() {
   const { getAccounts, addAccount } = useFinancialStore();
   const [lifeSearch, setLifeSearch] = useState("");
   const [homeSearch, setHomeSearch] = useState("");
@@ -63,7 +63,7 @@ export function Insurances() {
                 onChange={(e) => setLifeSearch(e.target.value)}
                 onFocus={() => setShowLifeSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowLifeSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showLifeSuggestions && (
                 <SuggestionsDropdown
@@ -100,7 +100,7 @@ export function Insurances() {
                 onChange={(e) => setHomeSearch(e.target.value)}
                 onFocus={() => setShowHomeSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowHomeSuggestions(false), 200)}
-                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-indigo-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
+                className="w-full bg-white/5 outline outline-1 outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md pl-9 pr-3 py-2.5 text-[13px] text-neutral-100"
               />
               {showHomeSuggestions && (
                 <SuggestionsDropdown
@@ -123,3 +123,4 @@ export function Insurances() {
     </>
   );
 }
+export default Insurances
