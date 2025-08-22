@@ -16,11 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen w-full flex bg-neutral-950 text-neutral-100">
         {/* Desktop Sidebar */}
-        <Sidebar className="hidden md:flex" />
+        <Sidebar className="hidden lg:flex" />
 
         {/* Main Content */}
         <main className="flex-1 md:pl-0 w-full">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 pt-16 md:pt-8">
+          <div className="max-w-full mx-auto px-4 md:px-4 pt-16 md:pt-8">
             {children}
             <div className="h-24" />
           </div>

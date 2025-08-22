@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
+import Image from "next/image";
 
 export function MobileHeader() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,20 +22,26 @@ export function MobileHeader() {
   return (
     <>
       {/* Top Header Bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 border-b border-white/10 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 border-b border-white/10 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
         <div className="h-14 flex items-center justify-between px-4">
           <button
             onClick={toggleSidebar}
-            className="inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-white/5 outline outline-1 outline-white/10"
+            className="inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-white/5 outline outline-white/10"
           >
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-md bg-custom-500/20 ring-1 ring-custom-400/30 flex items-center justify-center">
-              <span className="text-custom-300 text-sm font-semibold tracking-tight">FH</span>
+            <div className="h-12 w-12 flex items-center justify-center">
+              <Image
+                src="/logoPlacerly.svg"
+                width={60}
+                height={60}
+                sizes="100vw"
+                alt="Logo"
+              />
             </div>
-            <span className="text-[13px] text-neutral-300">Financial Hub</span>
+            <span className="text-[13px] text-neutral-300">Placerly</span>
           </div>
 
           <img
@@ -52,12 +59,12 @@ export function MobileHeader() {
           <button
             aria-label="Close sidebar overlay"
             onClick={closeSidebar}
-            className="fixed inset-0 bg-black/40 backdrop-blur-[1px] z-40 md:hidden"
+            className="fixed inset-0 bg-black/40 backdrop-blur-[1px] z-40 lg:hidden"
           />
           {/* Sidebar */}
           <Sidebar
             id="mobile-sidebar"
-            className="fixed z-50 inset-y-0 left-0 w-72 md:hidden"
+            className="fixed z-50 inset-y-0 left-0 w-72 lg:hidden"
             onNavigate={closeSidebar}
             onClose={closeSidebar}
           />

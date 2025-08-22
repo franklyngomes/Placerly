@@ -41,8 +41,8 @@ function Placerly() {
     <>
       {/* Header */}
       <header className="hidden md:flex items-center justify-between py-6">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">User Dashboard</h1>
+        <div className="">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Hello Franklyn!</h2>
           <p className="text-neutral-400 text-sm mt-1">Overview of your financial footprint and quick actions.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -57,7 +57,7 @@ function Placerly() {
               Go
             </button>
           </div>
-          <button className="px-3 py-2 rounded-md bg-custom-600 hover:bg-custom-500 text-[13px] font-medium outline outline-custom-600">
+          <button className="px-3 py-2 rounded-md bg-custom-600 hover:bg-custom-500 text-[13px] font-bold outline outline-custom-600">
             <div className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Quick Add
@@ -152,21 +152,21 @@ function Placerly() {
                       <LinkIcon className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Link a cash account</span>
                     </div>
-                    <Link href="/assets" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
+                    <Link href="/assets" className="text-xs font-bold text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
                   <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
                       <FilePlus2 className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Add life insurance</span>
                     </div>
-                    <Link href="/insurances" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
+                    <Link href="/insurances" className="text-xs font-bold text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
                   <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
                       <UserRoundPlus className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Add an executor</span>
                     </div>
-                    <Link href="/transition" className="text-xs text-custom-300 hover:text-custom-200">Go</Link>
+                    <Link href="/transition" className="text-xs font-bold text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
                 </ul>
               </div>
@@ -178,7 +178,7 @@ function Placerly() {
             <h3 className="text-[15px] font-medium tracking-tight">Major organizations</h3>
             <p className="text-xs text-neutral-400 mt-1">Across segments of your financial life</p>
 
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3">
               {Object.entries(organizationData).map(([category, orgs]) => (
                 <div key={category} className="rounded-lg bg-white/[0.04] outline outline-white/10 p-3">
                   <div className="text-[11px] text-neutral-400 capitalize">{category}</div>
@@ -226,7 +226,7 @@ function Placerly() {
                   className="w-full bg-white/5 outline outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
                 />
               </div>
-              <button className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 text-[13px] font-medium outline  outline-custom-400/40">
+              <button className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 text-sm font-bold outline  outline-custom-400/40">
                 Link selected
               </button>
             </div>
@@ -259,7 +259,7 @@ function Placerly() {
             </div>
             <Link 
               href="/placerly/transition"
-              className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 outline outline-custom-400/40 text-[13px] block text-center"
+              className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 outline outline-custom-400/40 text-sm font-bold block text-center"
             >
               Manage in Transition
             </Link>

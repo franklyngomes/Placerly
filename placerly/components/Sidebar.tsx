@@ -13,6 +13,7 @@ import {
   X,
   LogOut,
 } from "lucide-react";
+import Image from "next/image";
 
 interface SidebarProps {
   className?: string;
@@ -37,27 +38,31 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
     <aside
       id={id}
       className={cn(
-        "flex flex-col shrink-0 w-72 border-r border-white/10 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60",
+        "flex flex-col shrink-0 w-65 border-r border-white/10 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60",
         className
       )}
     >
       {/* Header */}
       <div className="px-5 py-4 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-md bg-custom-500/20 ring-1 ring-custom-400/30 flex items-center justify-center">
-            <span className="text-custom-300 text-sm font-semibold tracking-tight">FH</span>
+          <div className="h-12 w-12 flex items-center justify-center">
+            <Image
+            src="/logoPlacerly.svg"
+            width={60}
+            height={60}
+            sizes="100vw"
+            alt="Logo"
+            />
           </div>
           <div className="text-sm">
-            <div className="text-neutral-100 font-semibold tracking-tight leading-5">
-              Financial Hub
-            </div>
-            <div className="text-neutral-400 text-xs">Personal Finance Console</div>
+
+            <div className="text-neutral-300 text-xs font-bold">Personal Finance Console</div>
           </div>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="md:hidden inline-flex items-center justify-center h-8 w-8 rounded-md hover:bg-white/5 outline outline-1 outline-white/10"
+            className="lg:hidden inline-flex items-center justify-center h-8 w-8 rounded-md hover:bg-white/5 outline outline-white/10"
           >
             <X className="h-4 w-4" />
           </button>
@@ -81,7 +86,7 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
                 href={item.href}
                 onClick={onNavigate}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 text-neutral-300 hover:text-neutral-100 outline outline-1 outline-transparent hover:outline-white/10 transition text-[13px] font-medium",
+                  "w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 text-neutral-300 hover:text-neutral-100 outline  outline-transparent hover:outline-white/10 transition text-[13px] font-medium",
                   isActive && "bg-white/5 text-neutral-100 outline-white/10"
                 )}
               >
@@ -107,10 +112,10 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
           </div>
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <button className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-1 outline-white/10">
+          <button className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-white/10">
             Account
           </button>
-          <button className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-1 outline-white/10">
+          <button className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline  outline-white/10">
             <LogOut className="h-4 w-4" />
           </button>
         </div>
