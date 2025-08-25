@@ -11,8 +11,9 @@ import { Cookies } from "react-cookie"
 import { useRouter } from "next/navigation";
 import EyeIcon from "@/icons/Eye";
 import EyeCloseIcon from "@/icons/EyeClose";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { SigninQuery } from "@/api/query/query";
+import { useStore } from "@/store";
 
 
 interface SigninFormProps {
@@ -26,15 +27,29 @@ const schema = yup.object({
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, reset, control, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const {mutateAsync} = SigninQuery()
   const cookies = new Cookies()
   const router = useRouter()
+  const {user, setUser} = useStore()
 
   const onSubmit = async (data: SigninFormProps) => {
     const { email, password } = data
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('password', password)
+    const payload = data
+    mutateAsync(payload, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success(res?.message);
+        cookies.set("token", res?.token)
+        setUser(res?.user?.id)
+        reset()
+        router.push("/")
+      },
+    })
   }
+  console.log(user)
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">

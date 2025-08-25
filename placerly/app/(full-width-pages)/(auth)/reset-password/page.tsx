@@ -13,11 +13,11 @@ import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import OtpInput from 'react-otp-input';
+import { ResetPasswordQuery } from "@/api/query/query";
 
 interface ResetPaswordFormProps {
   email: string;
   newPassword: string;
-  code: number
 }
 const schema = yup.object({
   email: yup.string().email().required("Email is required"),
@@ -28,13 +28,26 @@ export default function RestPassword() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, reset, control, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const { mutateAsync } = ResetPasswordQuery()
 
   const onSubmit = async (data: ResetPaswordFormProps) => {
     const { email, newPassword } = data
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('newPassword', newPassword)
-    formData.append('code', code)
+    const payload = { ...data, code }
+    if (!email || !code || !newPassword) {
+      toast.error("All fields is missing!")
+      return
+    }
+    mutateAsync(payload, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success(res?.message);
+        reset()
+        router.push("/signin")
+      },
+    })
 
   }
   return (
@@ -74,7 +87,7 @@ export default function RestPassword() {
                 </div>
                 <div>
                   <Label>
-                    Password<span className="text-error-500">*</span>
+                    New Password<span className="text-error-500">*</span>
                   </Label>
                   <div className="relative">
                     <Controller
@@ -118,8 +131,8 @@ export default function RestPassword() {
                       renderSeparator={<span>-</span>}
                       renderInput={(props) => <input {...props} />}
                       inputStyle={{
-                        width: "40px", 
-                        height: "40px",  
+                        width: "40px",
+                        height: "40px",
                         border: "1px solid #111",
                         borderRadius: "8px",
                         fontSize: "18px",

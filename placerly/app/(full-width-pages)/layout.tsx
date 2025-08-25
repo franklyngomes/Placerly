@@ -1,4 +1,9 @@
+import Provider from "./provider";
 const FullWidthPageLayout = ({children}: {children: React.ReactNode;}) =>  {
-  return <div>{children}</div>;
+  return (
+    <Provider>
+      {children}
+    </Provider>
+  );
 }
 export default FullWidthPageLayout

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import { MobileHeader } from "@/components/MobileHeader";
 
@@ -13,8 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <html lang="en">
-      <body className="min-h-screen w-full flex bg-neutral-950 text-neutral-100">
+    <div className="min-h-screen w-full flex bg-neutral-950 text-neutral-100">
         {/* Desktop Sidebar */}
         <Sidebar className="hidden lg:flex" />
 
@@ -27,9 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         {/* Mobile Header */}
-        <MobileHeader/>
-      </body>
-    </html>
+        <MobileHeader />
+      </div>
   );
 }
 

@@ -26,7 +26,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //Admin Routes
 const adminRouter = require("./app/routes/AdminRoutes")
-app.use("/", adminRouter)
+app.use(adminRouter)
+
+//Placerly Routes 
+const placerlyRouter = require("./app/routes/PlacerlyRoutes")
+app.use("/api", placerlyRouter)
 
 const port = 5000
 app.listen(port, () => {

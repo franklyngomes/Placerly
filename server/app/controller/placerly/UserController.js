@@ -1,10 +1,10 @@
-const httpCode = require("../../helper/httpServerCode");
+const httpCode = require("../../helper/HttpCode")
 const {
   comparePassword,
-  hashedPassword,
+  hashPassword,
   hmacProcess,
 } = require("../../middleware/Auth");
-const UserModel = require("../../model/UserModel");
+const {UserModel} = require("../../model/placerly/UserModel");
 const jwt = require("jsonwebtoken");
 const transport = require("../../helper/SendMail");
 
@@ -14,12 +14,12 @@ class UserController {
       const { firstName, lastName, email, password, phone } = req.body;
       const existingUser = await UserModel.findOne({ email });
       if (existingUser) {
-        return res.status(httpCode.conflict).json({
+        return res.status(httpCode.notFound).json({
           status: false,
           message: "User with this email already exists",
         });
       }
-      const hashed = hashedPassword(password);
+      const hashed = hashPassword(password);
       const userData = new UserModel({
         firstName, lastName,
         email,
@@ -104,7 +104,7 @@ class UserController {
         });
       }
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(httpCode.serverError).json({
         status: false,
         message: error.message,
       });
@@ -154,7 +154,7 @@ class UserController {
         token: token,
       });
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(httpCode.serverError).json({
         status: false,
         message: error.message,
       });
@@ -162,7 +162,7 @@ class UserController {
   }
   async userProfileDetails(req, res) {
     try {
-      const id = req.params.id;
+      const id = req.user._id
       const user = await UserModel.findById(id);
       if (!user) {
         return res.status(httpCode.notFound).json({
@@ -176,7 +176,7 @@ class UserController {
         data: user,
       });
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(httpCode.serverError).json({
         status: false,
         message: error.message,
       });
@@ -194,7 +194,7 @@ class UserController {
         });
       }
       if (existingUser.verified) {
-        return res.status(httpCode.conflict).json({
+        return res.status(httpCode.badRequest).json({
           status: false,
           message: "User already verified!",
         });
@@ -232,7 +232,10 @@ class UserController {
         });
       }
     } catch (error) {
-      console.log(error);
+      return res.status(httpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
     }
   }
   async forgotPassword(req, res) {
@@ -315,7 +318,7 @@ class UserController {
         });
       }
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(httpCode.serverError).json({
         status: false,
         message: error.message,
       });
@@ -343,7 +346,7 @@ class UserController {
       }
       if (
         Date.now() - existingUser.forgotPasswordCodeValidation >
-        5 * 60 * 1000
+        5 * 60 * 100000
       ) {
         return res.status(httpCode.badRequest).json({
           status: false,
@@ -355,7 +358,7 @@ class UserController {
         process.env.NODEMAILER_VERIFICATION_SECRET
       );
       if (hashedCodeValue === existingUser.forgotPasswordCode) {
-        const hashed = hashedPassword(newPassword);
+        const hashed = hashPassword(newPassword);
         existingUser.password = hashed;
         existingUser.forgotPasswordCode = undefined;
         existingUser.forgotPasswordCodeValidation = undefined;
@@ -366,7 +369,7 @@ class UserController {
         message: "Password reset successful",
       });
     } catch (error) {
-      return res.status(httpCode.internalServerError).json({
+      return res.status(httpCode.serverError).json({
         status: false,
         message: error.message,
       });

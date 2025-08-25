@@ -112,9 +112,9 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
           </div>
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <button className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-white/10">
+          <a className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-white/10" href="/user-profile">
             Account
-          </button>
+          </a>
           <button className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline  outline-white/10">
             <LogOut className="h-4 w-4" />
           </button>

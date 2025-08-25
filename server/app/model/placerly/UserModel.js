@@ -58,11 +58,9 @@ const UserSchema = new Schema({
   },
   forgotPasswordCode: {
     type: String,
-    select: false,
   },
   forgotPasswordCodeValidation: {
     type: Number,
-    select: false,
   }
 }, {timestamps: true});
 const UserModel = mongoose.model("user", UserSchema);

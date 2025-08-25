@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ForgotPasswordQuery } from "@/api/query/query";
 
 interface ForgotPasswordFormProps {
   email: string;
@@ -17,11 +18,22 @@ const schema = yup.object({
 })
 export default function ForgotPassword() {
   const { handleSubmit, reset, control, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const {mutateAsync} = ForgotPasswordQuery()
   const router = useRouter()
   const onSubmit = async (data : ForgotPasswordFormProps) => {
     const { email } = data
-    const formData = new FormData()
-    formData.append('email', email)
+    const payload = data
+    mutateAsync(payload, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success(res?.message);
+        reset()
+        router.push("/reset-password")
+      },
+    })
 
   }
   return (

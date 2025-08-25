@@ -8,21 +8,40 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@/components/ui/button';
 import OtpInput from 'react-otp-input';
 import * as yup from "yup";
+import { VerifyEmailQuery } from '@/api/query/query';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
+interface VerifyEmailFormProps {
+  email: string;
+}
 const schema = yup.object({
   email: yup.string().email().required("Email is required"),
 })
 const VerifyEmail = () => {
   const [code, setCode] = React.useState('');
   const { handleSubmit, reset, control, formState: { errors, isSubmitting } } = useForm({ resolver: yupResolver(schema) });
+  const { mutateAsync } = VerifyEmailQuery()
+  const router = useRouter()
 
-  
-  const onSubmit = async (data) => {
-    const { email, newPassword } = data
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('code', code)
-
+  const onSubmit = async (data: VerifyEmailFormProps) => {
+    const { email } = data
+    const payload = { ...data, code }
+    if (!email || !code) {
+      toast.error("Email or Code is missing!")
+      return
+    }
+    mutateAsync(payload, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success(res?.message);
+        reset()
+        router.push('/signin')
+      },
+    })
   }
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
@@ -90,7 +109,7 @@ const VerifyEmail = () => {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full text-background" size="sm" type="submit">
+                  <Button className="w-full text-background" size="sm" type="submit" disabled={isSubmitting}>
                     Submit
                   </Button>
                 </div>

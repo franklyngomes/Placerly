@@ -2,14 +2,16 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import  {Label}  from "@/components/ui/label";
-import  {Input}  from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import EyeIcon from "@/icons/Eye";
 import EyeCloseIcon from "@/icons/EyeClose";
 import toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { SignupQuery } from "@/api/query/query";
+import { useRouter } from "next/navigation";
 
 interface SignupFormProps {
   firstName: string;
@@ -17,9 +19,6 @@ interface SignupFormProps {
   email: string;
   password: string;
   phone: string;
-  designation: string;
-  doctorId?: string;
-  role: string;
 }
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const schema = yup.object({
@@ -27,30 +26,32 @@ const schema = yup.object({
   lastName: yup.string().required("Last Name is required"),
   email: yup.string().email().required("Email is required"),
   password: yup.string().required("Password is required").min(8).max(15),
-  doctorId: yup.string(),
   phone: yup.string()
     .required("Phone number required")
     .matches(phoneRegExp, 'Phone number is not valid')
     .min(10, "too short")
     .max(10, "too long"),
-  designation: yup.string().required("Designation is required").max(25),
-  role: yup.string().required('Role is required')
 });
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, reset, control, formState: { errors, isSubmitting } } = useForm({ resolver: yupResolver(schema) });
+  const { mutateAsync } = SignupQuery()
+  const router = useRouter()
 
-  const onSubmit = async (data : SignupFormProps) => {
-    const { firstName, lastName, email, password, phone, designation, doctorId, role } = data
-    const formData = new FormData()
-    formData.append('firstName', firstName)
-    formData.append('lastName', lastName)
-    formData.append('email', email)
-    formData.append('password', password)
-    formData.append('phone', phone)
-    formData.append('designation', designation)
-    formData.append('role', role)
-
+  const onSubmit = async (data: SignupFormProps) => {
+    const { firstName, lastName, email, password, phone } = data
+    const payload = data
+    mutateAsync(payload, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success(res?.message);
+        reset()
+        router.push('/verify-email')
+      },
+    })
   }
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
@@ -68,7 +69,7 @@ export default function SignUp() {
                   {/* <!-- First Name --> */}
                   <div className="sm:col-span-1">
                     <Label>
-                      First Name<span className="text-error-500">*</span>
+                      First Name
                     </Label>
                     <Controller
                       control={control}
@@ -92,7 +93,7 @@ export default function SignUp() {
                   {/* <!-- Last Name --> */}
                   <div className="sm:col-span-1">
                     <Label>
-                      Last Name<span className="text-error-500">*</span>
+                      Last Name
                     </Label>
                     <Controller
                       control={control}
@@ -115,7 +116,7 @@ export default function SignUp() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
                     <Label>
-                      Email<span className="text-error-500">*</span>
+                      Email
                     </Label>
                     <Controller
                       control={control}
@@ -136,7 +137,7 @@ export default function SignUp() {
                   </div>
                   <div>
                     <Label>
-                      Password<span className="text-error-500">*</span>
+                      Password
                     </Label>
                     <div className="relative">
                       <Controller
@@ -169,7 +170,7 @@ export default function SignUp() {
                     )}
                   </div>
                   <div>
-                    <Label>Phone<span className="text-error-500">*</span></Label>
+                    <Label>Phone</Label>
                     <div className="relative">
                       <Controller
                         control={control}
@@ -191,7 +192,7 @@ export default function SignUp() {
                 </div>
                 {/* <!-- Button --> */}
                 <div>
-                  <Button className="w-full text-white" type="submit">
+                  <Button className="w-full text-white" type="submit" disabled={isSubmitting}>
                     {isSubmitting ? "Submitting..." : "Sign Up"}
                   </Button>
                 </div>
