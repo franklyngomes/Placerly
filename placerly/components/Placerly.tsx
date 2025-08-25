@@ -23,7 +23,6 @@ function Placerly() {
   const [quickInput, setQuickInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const {user} = useStore() 
-  console.log(user)
   
   const counts = getCounts();
   const connectedCounts = getConnectedCounts();
@@ -162,7 +161,7 @@ function Placerly() {
                       <FilePlus2 className="h-4 w-4 text-neutral-300" />
                       <span className="text-[13px]">Add life insurance</span>
                     </div>
-                    <Link href="/insurances" className="text-xs font-bold text-custom-300 hover:text-custom-200">Go</Link>
+                    <Link href="/insurance" className="text-xs font-bold text-custom-300 hover:text-custom-200">Go</Link>
                   </li>
                   <li className="flex items-center justify-between rounded-md bg-white/[0.03] outline outline-white/10 p-3 hover:outline-white/20">
                     <div className="flex items-center gap-3">
@@ -200,43 +199,9 @@ function Placerly() {
 
         {/* Right Column */}
         <div className="col-span-1">
-          {/* Quick Link */}
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-            <h3 className="text-[15px] font-medium tracking-tight">Quick link an account</h3>
-            <p className="text-xs text-neutral-400 mt-1">Start typing to see suggestions</p>
-            <div className="mt-3">
-              <div className="grid grid-cols-3 gap-2">
-                {quickCategories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setQuickCategory(cat.id)}
-                    className={`px-3 py-2 text-xs rounded-md bg-white/[0.04] outline outline-white/10 hover:bg-white/[0.08] ${
-                      quickCategory === cat.id ? 'ring-1 ring-custom-400/40 bg-white/[0.08]' : ''
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-              <div className="mt-3 relative">
-                <input
-                  type="text"
-                  placeholder="e.g., Barclays, Vanguard, Aviva..."
-                  value={quickInput}
-                  onChange={(e) => setQuickInput(e.target.value)}
-                  onFocus={() => setShowSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  className="w-full bg-white/5 outline outline-white/10 focus:outline-custom-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2.5 text-[13px] text-neutral-100"
-                />
-              </div>
-              <button className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 text-sm font-bold outline  outline-custom-400/40">
-                Link selected
-              </button>
-            </div>
-          </div>
 
           {/* Executors & Beneficiaries */}
-          <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
             <h3 className="text-[15px] font-medium tracking-tight">Executors & Beneficiaries</h3>
             <p className="text-xs text-neutral-400 mt-1">Manage access to your digital footprint</p>
             <div className="mt-3 space-y-2">

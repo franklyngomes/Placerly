@@ -1,15 +1,10 @@
-const {
-  AssetsModel,
-  AssetsSchemaJoi,
-} = require("../../model/placerly/AssetsModel");
 const HttpCode = require("../../helper/HttpCode");
-const {UserModel} = require("../../model/placerly/UserModel")
+const {DebtModel, DebtSchemaJoi} = require("../../model/placerly/DebtModel");
 
-class AssetsController {
-  // Create a new asset
-  async createAsset(req, res) {
+class DebtController {
+  async createDebt(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = DebtSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -17,21 +12,20 @@ class AssetsController {
         });
       }
 
-      const newAsset = new AssetsModel({
+      const debt = await DebtModel.create({
         ...req.body,
         userId: req.user._id,
       });
 
-      const savedAsset = await newAsset.save();
-
+      // Push to user's debts array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { assets: savedAsset._id },
+        $push: { debts: debt._id },
       });
 
       return res.status(HttpCode.create).json({
         status: true,
-        message: "Asset created successfully",
-        data: savedAsset,
+        message: "Debt created successfully",
+        data: debt,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -40,20 +34,12 @@ class AssetsController {
       });
     }
   }
-
-  async getUserAssets(req, res) {
+  async getUserDebts(req, res) {
     try {
-      const user = await UserModel.findById(req.user._id).populate("assets");
-      if (!user) {
-        return res.status(HttpCode.notFound).json({
-          status: false,
-          message: "User not found",
-        });
-      }
-
+      const debts = await DebtModel.find({ userId: req.user._id });
       return res.status(HttpCode.success).json({
         status: true,
-        data: user.assets,
+        data: debts,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -62,24 +48,23 @@ class AssetsController {
       });
     }
   }
-
-  async getAssetById(req, res) {
+  async getDebtById(req, res) {
     try {
-      const asset = await AssetsModel.findOne({
+      const debt = await DebtModel.findOne({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!asset) {
+      if (!debt) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found",
+          message: "Debt not found",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        data: asset,
+        data: debt,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -89,9 +74,9 @@ class AssetsController {
     }
   }
 
-  async updateAsset(req, res) {
+  async updateDebt(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = DebtSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -99,23 +84,23 @@ class AssetsController {
         });
       }
 
-      const updatedAsset = await AssetsModel.findOneAndUpdate(
+      const updatedDebt = await DebtModel.findOneAndUpdate(
         { _id: req.params.id, userId: req.user._id },
         req.body,
         { new: true }
       );
 
-      if (!updatedAsset) {
+      if (!updatedDebt) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Debt not found or unauthorized",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset updated successfully",
-        data: updatedAsset,
+        message: "Debt updated successfully",
+        data: updatedDebt,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -125,26 +110,28 @@ class AssetsController {
     }
   }
 
-  async deleteAsset(req, res) {
+  async deleteDebt(req, res) {
     try {
-      const deletedAsset = await AssetsModel.findOneAndDelete({
+      const debt = await DebtModel.findOneAndDelete({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!deletedAsset) {
+      if (!debt) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Debt not found or unauthorized",
         });
       }
+
+      // Remove from user's debts array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $pull: { assets: deletedAsset._id },
+        $pull: { debts: debt._id },
       });
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset deleted successfully",
+        message: "Debt deleted successfully",
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -154,4 +141,5 @@ class AssetsController {
     }
   }
 }
-module.exports = new AssetsController();
+
+module.exports = new DebtController()

@@ -8,11 +8,11 @@ const UserSchemaJoi = Joi.object({
   email: Joi.string().email().required("Email is required!"),
   password: Joi.string().required("Password is required!"),
   phone: Joi.string().regex(/^[0-9]{10}$/).messages({'string.pattern.base': `Phone number must have 10 digits.`}).required(),
-  assets: Joi.string(),
-  debts: Joi.string(),
-  insurance: Joi.string(),
-  utility: Joi.string(),
-  transition: Joi.string(),
+  assets: Joi.array().items(Joi.string()),
+  debts: Joi.array().items(Joi.string()),
+  insurance: Joi.array().items(Joi.string()),
+  utility: Joi.array().items(Joi.string()),
+  transition: Joi.array().items(Joi.string()),
 });
 const UserSchema = new Schema({
   firstName: {
@@ -30,22 +30,22 @@ const UserSchema = new Schema({
   phone: {
 
   },
-  assets: {
+  assets: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "assets",
-  },
-  debts: {
+  }],
+  debts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "debt",
-  },
-  insurance: {
+  }],
+  insurance: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "insurance",
-  },
-  transition: {
+  }],
+  transition: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "transition",
-  },
+  }],
   verified: {
     type: Boolean,
     default: false,

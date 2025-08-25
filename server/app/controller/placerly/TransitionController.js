@@ -1,15 +1,10 @@
-const {
-  AssetsModel,
-  AssetsSchemaJoi,
-} = require("../../model/placerly/AssetsModel");
 const HttpCode = require("../../helper/HttpCode");
-const {UserModel} = require("../../model/placerly/UserModel")
+const {} = require("../../model/placerly/TransitionModel");
 
-class AssetsController {
-  // Create a new asset
-  async createAsset(req, res) {
+class TransitionController {
+  async createTransition(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = TransitionSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -17,21 +12,20 @@ class AssetsController {
         });
       }
 
-      const newAsset = new AssetsModel({
+      const transition = await TransitionModel.create({
         ...req.body,
         userId: req.user._id,
       });
 
-      const savedAsset = await newAsset.save();
-
+      // Link to user (if you want to track transitions in user model)
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { assets: savedAsset._id },
+        $push: { transitions: transition._id },
       });
 
       return res.status(HttpCode.create).json({
         status: true,
-        message: "Asset created successfully",
-        data: savedAsset,
+        message: "Transition record created successfully",
+        data: transition,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -41,19 +35,12 @@ class AssetsController {
     }
   }
 
-  async getUserAssets(req, res) {
+  async getUserTransitions(req, res) {
     try {
-      const user = await UserModel.findById(req.user._id).populate("assets");
-      if (!user) {
-        return res.status(HttpCode.notFound).json({
-          status: false,
-          message: "User not found",
-        });
-      }
-
+      const transitions = await TransitionModel.find({ userId: req.user._id });
       return res.status(HttpCode.success).json({
         status: true,
-        data: user.assets,
+        data: transitions,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -63,23 +50,23 @@ class AssetsController {
     }
   }
 
-  async getAssetById(req, res) {
+  async getTransitionById(req, res) {
     try {
-      const asset = await AssetsModel.findOne({
+      const transition = await TransitionModel.findOne({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!asset) {
+      if (!transition) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found",
+          message: "Transition not found",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        data: asset,
+        data: transition,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -89,9 +76,9 @@ class AssetsController {
     }
   }
 
-  async updateAsset(req, res) {
+  async updateTransition(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = TransitionSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -99,23 +86,23 @@ class AssetsController {
         });
       }
 
-      const updatedAsset = await AssetsModel.findOneAndUpdate(
+      const updatedTransition = await TransitionModel.findOneAndUpdate(
         { _id: req.params.id, userId: req.user._id },
         req.body,
         { new: true }
       );
 
-      if (!updatedAsset) {
+      if (!updatedTransition) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Transition not found or unauthorized",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset updated successfully",
-        data: updatedAsset,
+        message: "Transition updated successfully",
+        data: updatedTransition,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -125,26 +112,28 @@ class AssetsController {
     }
   }
 
-  async deleteAsset(req, res) {
+  async deleteTransition(req, res) {
     try {
-      const deletedAsset = await AssetsModel.findOneAndDelete({
+      const transition = await TransitionModel.findOneAndDelete({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!deletedAsset) {
+      if (!transition) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Transition not found or unauthorized",
         });
       }
+
+      // Remove from user's transitions array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $pull: { assets: deletedAsset._id },
+        $pull: { transitions: transition._id },
       });
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset deleted successfully",
+        message: "Transition deleted successfully",
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -154,4 +143,4 @@ class AssetsController {
     }
   }
 }
-module.exports = new AssetsController();
+module.exports = new TransitionController()

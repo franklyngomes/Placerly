@@ -14,7 +14,6 @@ import {
   LogOut,
 } from "lucide-react";
 import Image from "next/image";
-import { UserProfileQuery } from "@/api/query/query";
 import { Cookies } from "react-cookie";
 import { useStore } from "@/store";
 
@@ -42,8 +41,10 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
 
   const logout = () => {
     const token = cookies.get("token")
-    if(token){
+    const appStorage = localStorage.getItem("app-storage")
+    if(token && appStorage){
       cookies.remove("token")
+      localStorage.removeItem("app-storage")
       router.push("/signin")
     }
   }

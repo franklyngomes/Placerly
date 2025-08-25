@@ -1,15 +1,13 @@
-const {
-  AssetsModel,
-  AssetsSchemaJoi,
-} = require("../../model/placerly/AssetsModel");
 const HttpCode = require("../../helper/HttpCode");
-const {UserModel} = require("../../model/placerly/UserModel")
+const {
+  UtilityModel,
+  UtilitySchemaJoi,
+} = require("../../model/placerly/UtilityModel");
 
-class AssetsController {
-  // Create a new asset
-  async createAsset(req, res) {
+class UtilityController {
+  async createUtility(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = UtilitySchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -17,21 +15,20 @@ class AssetsController {
         });
       }
 
-      const newAsset = new AssetsModel({
+      const utility = await UtilityModel.create({
         ...req.body,
         userId: req.user._id,
       });
 
-      const savedAsset = await newAsset.save();
-
+      // Push to user's utilities array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { assets: savedAsset._id },
+        $push: { utilities: utility._id },
       });
 
       return res.status(HttpCode.create).json({
         status: true,
-        message: "Asset created successfully",
-        data: savedAsset,
+        message: "Utility created successfully",
+        data: utility,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -41,19 +38,12 @@ class AssetsController {
     }
   }
 
-  async getUserAssets(req, res) {
+  async getUserUtilities(req, res) {
     try {
-      const user = await UserModel.findById(req.user._id).populate("assets");
-      if (!user) {
-        return res.status(HttpCode.notFound).json({
-          status: false,
-          message: "User not found",
-        });
-      }
-
+      const utilities = await UtilityModel.find({ userId: req.user._id });
       return res.status(HttpCode.success).json({
         status: true,
-        data: user.assets,
+        data: utilities,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -63,23 +53,23 @@ class AssetsController {
     }
   }
 
-  async getAssetById(req, res) {
+  async getUtilityById(req, res) {
     try {
-      const asset = await AssetsModel.findOne({
+      const utility = await UtilityModel.findOne({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!asset) {
+      if (!utility) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found",
+          message: "Utility not found",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        data: asset,
+        data: utility,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -89,9 +79,9 @@ class AssetsController {
     }
   }
 
-  async updateAsset(req, res) {
+  async updateUtility(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = UtilitySchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -99,23 +89,23 @@ class AssetsController {
         });
       }
 
-      const updatedAsset = await AssetsModel.findOneAndUpdate(
+      const updatedUtility = await UtilityModel.findOneAndUpdate(
         { _id: req.params.id, userId: req.user._id },
         req.body,
         { new: true }
       );
 
-      if (!updatedAsset) {
+      if (!updatedUtility) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Utility not found or unauthorized",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset updated successfully",
-        data: updatedAsset,
+        message: "Utility updated successfully",
+        data: updatedUtility,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -125,26 +115,28 @@ class AssetsController {
     }
   }
 
-  async deleteAsset(req, res) {
+  async deleteUtility(req, res) {
     try {
-      const deletedAsset = await AssetsModel.findOneAndDelete({
+      const utility = await UtilityModel.findOneAndDelete({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!deletedAsset) {
+      if (!utility) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Utility not found or unauthorized",
         });
       }
+
+      // Remove from user's utilities array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $pull: { assets: deletedAsset._id },
+        $pull: { utilities: utility._id },
       });
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset deleted successfully",
+        message: "Utility deleted successfully",
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -154,4 +146,4 @@ class AssetsController {
     }
   }
 }
-module.exports = new AssetsController();
+module.exports = new UtilityController();

@@ -1,15 +1,13 @@
 const {
-  AssetsModel,
-  AssetsSchemaJoi,
-} = require("../../model/placerly/AssetsModel");
+  InsuranceModel,
+  InsuranceSchemaJoi,
+} = require("../../model/placerly/InsuranceModel");
 const HttpCode = require("../../helper/HttpCode");
-const {UserModel} = require("../../model/placerly/UserModel")
 
-class AssetsController {
-  // Create a new asset
-  async createAsset(req, res) {
+class InsuranceController {
+  async createInsurance(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = InsuranceSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -17,21 +15,20 @@ class AssetsController {
         });
       }
 
-      const newAsset = new AssetsModel({
+      const insurance = await InsuranceModel.create({
         ...req.body,
         userId: req.user._id,
       });
 
-      const savedAsset = await newAsset.save();
-
+      // Push to user's insurances array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { assets: savedAsset._id },
+        $push: { insurances: insurance._id },
       });
 
       return res.status(HttpCode.create).json({
         status: true,
-        message: "Asset created successfully",
-        data: savedAsset,
+        message: "Insurance created successfully",
+        data: insurance,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -41,19 +38,12 @@ class AssetsController {
     }
   }
 
-  async getUserAssets(req, res) {
+  async getUserInsurances(req, res) {
     try {
-      const user = await UserModel.findById(req.user._id).populate("assets");
-      if (!user) {
-        return res.status(HttpCode.notFound).json({
-          status: false,
-          message: "User not found",
-        });
-      }
-
+      const insurances = await InsuranceModel.find({ userId: req.user._id });
       return res.status(HttpCode.success).json({
         status: true,
-        data: user.assets,
+        data: insurances,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -63,23 +53,23 @@ class AssetsController {
     }
   }
 
-  async getAssetById(req, res) {
+  async getInsuranceById(req, res) {
     try {
-      const asset = await AssetsModel.findOne({
+      const insurance = await InsuranceModel.findOne({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!asset) {
+      if (!insurance) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found",
+          message: "Insurance not found",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        data: asset,
+        data: insurance,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -89,9 +79,9 @@ class AssetsController {
     }
   }
 
-  async updateAsset(req, res) {
+  async updateInsurance(req, res) {
     try {
-      const { error } = AssetsSchemaJoi.validate(req.body);
+      const { error } = InsuranceSchemaJoi.validate(req.body);
       if (error) {
         return res.status(HttpCode.badRequest).json({
           status: false,
@@ -99,23 +89,23 @@ class AssetsController {
         });
       }
 
-      const updatedAsset = await AssetsModel.findOneAndUpdate(
+      const updatedInsurance = await InsuranceModel.findOneAndUpdate(
         { _id: req.params.id, userId: req.user._id },
         req.body,
         { new: true }
       );
 
-      if (!updatedAsset) {
+      if (!updatedInsurance) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Insurance not found or unauthorized",
         });
       }
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset updated successfully",
-        data: updatedAsset,
+        message: "Insurance updated successfully",
+        data: updatedInsurance,
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -125,26 +115,28 @@ class AssetsController {
     }
   }
 
-  async deleteAsset(req, res) {
+  async deleteInsurance(req, res) {
     try {
-      const deletedAsset = await AssetsModel.findOneAndDelete({
+      const insurance = await InsuranceModel.findOneAndDelete({
         _id: req.params.id,
         userId: req.user._id,
       });
 
-      if (!deletedAsset) {
+      if (!insurance) {
         return res.status(HttpCode.notFound).json({
           status: false,
-          message: "Asset not found or not authorized",
+          message: "Insurance not found or unauthorized",
         });
       }
+
+      // Remove from user's insurances array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $pull: { assets: deletedAsset._id },
+        $pull: { insurances: insurance._id },
       });
 
       return res.status(HttpCode.success).json({
         status: true,
-        message: "Asset deleted successfully",
+        message: "Insurance deleted successfully",
       });
     } catch (err) {
       return res.status(HttpCode.serverError).json({
@@ -154,4 +146,5 @@ class AssetsController {
     }
   }
 }
-module.exports = new AssetsController();
+
+module.exports = new InsuranceController()

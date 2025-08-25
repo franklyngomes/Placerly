@@ -1,12 +1,17 @@
-import { endPoints } from "../endpoints/endPoints";
-import { axiosInstance } from "../axios/axiosInstance";
 import axios from "axios";
-import { ForgotPasswordData, ResetPasswordData, SigninData, SignupData, VerifyEmailData } from "@/types/types";
+import { axiosInstance } from "../axios/axiosInstance";
+import { endPoints } from "../endpoints/endPoints";
 import { Cookies } from "react-cookie";
+const cookies = new Cookies()
 
-export const SignupFunc = async (Data: SignupData) => {
+export const CreateAssetFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.signup, Data);
+    const response = await axiosInstance.post(endPoints.assets.create, Data,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -15,9 +20,14 @@ export const SignupFunc = async (Data: SignupData) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const SigninFunc = async (Data: SigninData) => {
+export const GetAllAssetFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.signin, Data);
+    const response = await axiosInstance.get(endPoints.assets.get_asset,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -26,9 +36,14 @@ export const SigninFunc = async (Data: SigninData) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const VerifyEmailFunc = async (Data: VerifyEmailData) => {
+export const AssetDetailsFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.verify_email, Data);
+    const response = await axiosInstance.get(endPoints.assets.details+ id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -37,38 +52,14 @@ export const VerifyEmailFunc = async (Data: VerifyEmailData) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const ForgotPasswordFunc = async (Data: ForgotPasswordData) => {
-  try {
-    const response = await axiosInstance.post(endPoints.forgot_password, Data);
-    return response?.data
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return { error: true, message: error.response?.data?.message || "Something went wrong" };
-    }
-    return { error: true, message: "Unexpected error" };
-  }
-}
-
-export const ResetPasswordFunc = async (Data: ResetPasswordData) => {
-  try {
-    const response = await axiosInstance.post(endPoints.reset_password, Data);
-    return response?.data
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return { error: true, message: error.response?.data?.message || "Something went wrong" };
-    }
-    return { error: true, message: "Unexpected error" };
-  }
-}
-export const ProfileApiFunc = async () => {
-  const cookies = new Cookies()
+export const AssetUpdateFunc = async (id: string) => {
   const token = cookies.get("token")
   try {
-    const response = await axiosInstance.get(endPoints.profile, {
+    const response = await axiosInstance.put(endPoints.assets.update+id, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    })
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -78,3 +69,19 @@ export const ProfileApiFunc = async () => {
   }
 }
 
+export const AssetDeleteFunc = async (id: string) => {
+  const token = cookies.get("token")
+  try {
+    const response = await axiosInstance.delete(endPoints.assets.delete+id, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response?.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return { error: true, message: error.response?.data?.message || "Something went wrong" };
+    }
+    return { error: true, message: "Unexpected error" };
+  }
+}

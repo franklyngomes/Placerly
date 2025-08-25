@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 const Joi = require("joi");
 
 const TypeOptions = {
-  CASH: "Cash Account",
-  SHARE: "Stock/Share Account",
+  CASH: "Cash",
+  SHARE: "Stocks",
 };
 
 const AssetsSchemaJoi = Joi.object({

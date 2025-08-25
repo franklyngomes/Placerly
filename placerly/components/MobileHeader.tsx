@@ -43,12 +43,6 @@ export function MobileHeader() {
             </div>
             <span className="text-[13px] text-neutral-300">Placerly</span>
           </div>
-
-          <img
-            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
-            alt="Alex Morgan"
-            className="h-8 w-8 rounded-full ring-1 ring-white/10 object-cover"
-          />
         </div>
       </div>
 
