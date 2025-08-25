@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Search, Plus, Banknote, CreditCard, ShieldCheck, PlugZap, Link as LinkIcon, FilePlus2, UserRoundPlus } from "lucide-react";
 import { ActivityChart } from "@/components/ActivityChart";
 import { useFinancialStore } from "@/stores/financialStore";
+import { useStore } from "@/store";
 
 const organizationData = {
   cash: ["Barclays", "Lloyds", "HSBC", "Monzo"],
@@ -21,6 +22,8 @@ function Placerly() {
   const [quickCategory, setQuickCategory] = useState<string>("assets.cash");
   const [quickInput, setQuickInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const {user} = useStore() 
+  console.log(user)
   
   const counts = getCounts();
   const connectedCounts = getConnectedCounts();
@@ -42,7 +45,7 @@ function Placerly() {
       {/* Header */}
       <header className="hidden md:flex items-center justify-between py-6">
         <div className="">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Hello Franklyn!</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Hello {user?.firstName}!</h2>
           <p className="text-neutral-400 text-sm mt-1">Overview of your financial footprint and quick actions.</p>
         </div>
         <div className="flex items-center gap-2">

@@ -1,10 +1,10 @@
-const httpCode = require("../../helper/HttpCode")
+const httpCode = require("../../helper/HttpCode");
 const {
   comparePassword,
   hashPassword,
   hmacProcess,
 } = require("../../middleware/Auth");
-const {UserModel} = require("../../model/placerly/UserModel");
+const { UserModel } = require("../../model/placerly/UserModel");
 const jwt = require("jsonwebtoken");
 const transport = require("../../helper/SendMail");
 
@@ -21,7 +21,8 @@ class UserController {
       }
       const hashed = hashPassword(password);
       const userData = new UserModel({
-        firstName, lastName,
+        firstName,
+        lastName,
         email,
         password: hashed,
         phone,
@@ -119,7 +120,7 @@ class UserController {
           message: "All fields are required",
         });
       }
-      const user = await UserModel.findOne({ email })
+      const user = await UserModel.findOne({ email });
       if (!user) {
         return res.status(httpCode.badRequest).json({
           status: false,
@@ -137,7 +138,8 @@ class UserController {
       const token = jwt.sign(
         {
           _id: user._id,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
         },
         process.env.JWT_SECRET_KEY,
@@ -148,7 +150,8 @@ class UserController {
         message: "Logged in successfully",
         user: {
           id: user._id,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
         },
         token: token,
@@ -162,7 +165,7 @@ class UserController {
   }
   async userProfileDetails(req, res) {
     try {
-      const id = req.user._id
+      const id = req.user._id;
       const user = await UserModel.findById(id);
       if (!user) {
         return res.status(httpCode.notFound).json({
@@ -186,7 +189,7 @@ class UserController {
     try {
       const { email, code } = req.body;
       const codeValue = code.toString();
-      const existingUser = await UserModel.findOne({ email })
+      const existingUser = await UserModel.findOne({ email });
       if (!existingUser) {
         return res.status(httpCode.notFound).json({
           status: false,
@@ -328,7 +331,7 @@ class UserController {
     try {
       const { email, code, newPassword } = req.body;
       const codeValue = code.toString();
-      const existingUser = await UserModel.findOne({ email })
+      const existingUser = await UserModel.findOne({ email });
       if (!existingUser) {
         return res.status(httpCode.notFound).json({
           status: false,

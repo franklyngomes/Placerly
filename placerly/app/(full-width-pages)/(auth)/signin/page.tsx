@@ -30,7 +30,7 @@ export default function SignIn() {
   const {mutateAsync} = SigninQuery()
   const cookies = new Cookies()
   const router = useRouter()
-  const {user, setUser} = useStore()
+  const {userid, setUserId, setUser, user} = useStore()
 
   const onSubmit = async (data: SigninFormProps) => {
     const { email, password } = data
@@ -41,15 +41,15 @@ export default function SignIn() {
           toast.error(res.message);
           return;
         }
-        toast.success(res?.message);
         cookies.set("token", res?.token)
-        setUser(res?.user?.id)
+        setUserId(res?.user?.id)
+        setUser(res?.user)
         reset()
+        toast.success(res?.message);
         router.push("/")
       },
     })
   }
-  console.log(user)
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">

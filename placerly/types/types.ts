@@ -38,6 +38,8 @@ export interface UserProfile {
   deletedAt?: null;
 }
 export interface StoreState {
-  user: UserProfile | null
+  userid: string | null;
+  setUserId: (value: string) => void;
+  user: UserProfile | null;
   setUser: (value: UserProfile) => void
 }

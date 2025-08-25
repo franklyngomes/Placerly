@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -14,6 +14,9 @@ import {
   LogOut,
 } from "lucide-react";
 import Image from "next/image";
+import { UserProfileQuery } from "@/api/query/query";
+import { Cookies } from "react-cookie";
+import { useStore } from "@/store";
 
 interface SidebarProps {
   className?: string;
@@ -33,6 +36,17 @@ const navigation = [
 
 export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const cookies = new Cookies()
+  const router = useRouter()
+  const {user} = useStore()
+
+  const logout = () => {
+    const token = cookies.get("token")
+    if(token){
+      cookies.remove("token")
+      router.push("/signin")
+    }
+  }
 
   return (
     <aside
@@ -101,21 +115,23 @@ export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
       {/* User Profile */}
       <div className="mt-auto p-4 border-t border-white/10">
         <div className="flex items-center gap-3">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
             alt="Alex Morgan"
             className="h-9 w-9 rounded-full ring-1 ring-white/10 object-cover"
+            width={60}
+            height={60}
           />
           <div className="text-[13px]">
-            <div className="font-medium text-neutral-100 tracking-tight">Alex Morgan</div>
-            <div className="text-neutral-400 text-xs">alex.morgan@example.com</div>
+            <div className="font-medium text-neutral-100 tracking-tight">{user?.firstName} {user?.lastName}</div>
+            <div className="text-neutral-400 text-xs">{user?.email}</div>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <a className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-white/10" href="/user-profile">
+          <Link className="flex-1 text-xs px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline outline-white/10" href="/user-profile">
             Account
-          </a>
-          <button className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline  outline-white/10">
+          </Link>
+          <button className="px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 outline  outline-white/10" onClick={logout}>
             <LogOut className="h-4 w-4" />
           </button>
         </div>
