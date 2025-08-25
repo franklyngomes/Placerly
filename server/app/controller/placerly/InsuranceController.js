@@ -3,6 +3,7 @@ const {
   InsuranceSchemaJoi,
 } = require("../../model/placerly/InsuranceModel");
 const HttpCode = require("../../helper/HttpCode");
+const {UserModel} = require("../../model/placerly/UserModel")
 
 class InsuranceController {
   async createInsurance(req, res) {
@@ -20,9 +21,8 @@ class InsuranceController {
         userId: req.user._id,
       });
 
-      // Push to user's insurances array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { insurances: insurance._id },
+        $push: { insurance: insurance._id },
       });
 
       return res.status(HttpCode.create).json({

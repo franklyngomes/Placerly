@@ -3,6 +3,7 @@ const {
   UtilityModel,
   UtilitySchemaJoi,
 } = require("../../model/placerly/UtilityModel");
+const {UserModel} = require("../../model/placerly/UserModel")
 
 class UtilityController {
   async createUtility(req, res) {
@@ -22,7 +23,7 @@ class UtilityController {
 
       // Push to user's utilities array
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { utilities: utility._id },
+        $push: { utility: utility._id },
       });
 
       return res.status(HttpCode.create).json({

@@ -143,7 +143,7 @@ class UserController {
           email: user.email,
         },
         process.env.JWT_SECRET_KEY,
-        { expiresIn: "3hr" }
+        { expiresIn: "3d" }
       );
       return res.status(httpCode.success).json({
         status: true,

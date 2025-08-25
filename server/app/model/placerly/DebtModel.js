@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const Joi = require("joi");
 
 const TypeOptions = {
-  CARD: "Credit Card",
+  CARD: "Credit",
   MORTGAGE: "Mortgage",
 };
 
@@ -41,6 +41,7 @@ const DebtSchema = new Schema(
     },
     dueDate: {
       type: Date,
+      default: Date.now()
     }
   },
   { timestamps: true }

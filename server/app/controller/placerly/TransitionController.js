@@ -1,5 +1,6 @@
 const HttpCode = require("../../helper/HttpCode");
-const {} = require("../../model/placerly/TransitionModel");
+const {TransitionModel} = require("../../model/placerly/TransitionModel");
+const {UserModel} = require("../../model/placerly/UserModel")
 
 class TransitionController {
   async createTransition(req, res) {

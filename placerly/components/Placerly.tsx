@@ -47,7 +47,7 @@ function Placerly() {
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Hello {user?.firstName}!</h2>
           <p className="text-neutral-400 text-sm mt-1">Overview of your financial footprint and quick actions.</p>
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <div className="relative group">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-neutral-400" />
             <input 
@@ -65,7 +65,7 @@ function Placerly() {
               Quick Add
             </div>
           </button>
-        </div>
+        </div> */}
       </header>
 
       {/* Main Content */}
@@ -226,7 +226,7 @@ function Placerly() {
               )}
             </div>
             <Link 
-              href="/placerly/transition"
+              href="/transition"
               className="mt-3 w-full px-3 py-2.5 rounded-md bg-custom-600/90 hover:bg-custom-500 outline outline-custom-400/40 text-sm font-bold block text-center"
             >
               Manage in Transition

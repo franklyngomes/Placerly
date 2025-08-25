@@ -1,10 +1,17 @@
 import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
+import { Cookies } from "react-cookie";
+const cookies = new Cookies()
 
 export const CreateInsuranceFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.insurance.create, Data);
+    const response = await axiosInstance.post(endPoints.insurance.create, Data,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -14,8 +21,13 @@ export const CreateInsuranceFunc = async (Data) => {
   }
 }
 export const GetAllInsuranceFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.get(endPoints.insurance.get_insurance);
+    const response = await axiosInstance.get(endPoints.insurance.get_insurance,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -25,8 +37,13 @@ export const GetAllInsuranceFunc = async (Data) => {
   }
 }
 export const InsuranceDetailsFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.get(endPoints.insurance.details+ id);
+    const response = await axiosInstance.get(endPoints.insurance.details+ id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -36,8 +53,13 @@ export const InsuranceDetailsFunc = async (id: string) => {
   }
 }
 export const InsuranceUpdateFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.put(endPoints.insurance.update+id);
+    const response = await axiosInstance.put(endPoints.insurance.update+id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -48,8 +70,13 @@ export const InsuranceUpdateFunc = async (id: string) => {
 }
 
 export const InsuranceDeleteFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.insurance.delete+id);
+    const response = await axiosInstance.delete(endPoints.insurance.delete+id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {

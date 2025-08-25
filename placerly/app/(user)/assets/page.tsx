@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { Search, Plus, Trash2, Edit3, DollarSign, TrendingUp } from "lucide-react";
+import { Plus, Trash2,DollarSign, TrendingUp } from "lucide-react";
 import { AssetListQuery, CreateAssetQuery, AssetDeleteQuery } from "../../../api/query/AssetsQuery";
 import { useStore } from "@/store";
 
@@ -18,7 +18,7 @@ export default function Assets() {
   const { data, isLoading, error } = AssetListQuery();
   const createAssetMutation = CreateAssetQuery();
   const deleteAssetMutation = AssetDeleteQuery();
-  const assets = data?.data ?? [];
+  const assets = data?.data || [];
   const [cashSearch, setCashSearch] = useState("");
   const [stocksSearch, setStocksSearch] = useState("");
   const [showCashForm, setShowCashForm] = useState(false);
@@ -173,7 +173,7 @@ export default function Assets() {
 
           <div className="space-y-3">
             {cashAssets.map((asset) => (
-              <div key={asset.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+              <div key={asset._id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h4 className="text-[13px] font-medium text-neutral-100">{asset.provider}</h4>
@@ -276,7 +276,7 @@ export default function Assets() {
 
           <div className="space-y-3">
             {stocksAssets.map((asset) => (
-              <div key={asset.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+              <div key={asset._id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h4 className="text-[13px] font-medium text-neutral-100">{asset.provider}</h4>

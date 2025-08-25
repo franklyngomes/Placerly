@@ -46,6 +46,10 @@ const UserSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "transition",
   }],
+    utility: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "utility",
+  }],
   verified: {
     type: Boolean,
     default: false,

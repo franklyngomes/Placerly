@@ -1,10 +1,17 @@
 import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
+import { Cookies } from "react-cookie";
+const cookies = new Cookies()
 
 export const CreateUtilityFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.utility.create, Data);
+    const response = await axiosInstance.post(endPoints.utility.create, Data,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -14,8 +21,13 @@ export const CreateUtilityFunc = async (Data) => {
   }
 }
 export const GetAllUtilityFunc = async (Data) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.get(endPoints.utility.get_utility);
+    const response = await axiosInstance.get(endPoints.utility.get_utility,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -25,8 +37,13 @@ export const GetAllUtilityFunc = async (Data) => {
   }
 }
 export const UtilityDetailsFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.get(endPoints.utility.details+ id);
+    const response = await axiosInstance.get(endPoints.utility.details+ id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -36,8 +53,13 @@ export const UtilityDetailsFunc = async (id: string) => {
   }
 }
 export const UtilityUpdateFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.put(endPoints.utility.update+id);
+    const response = await axiosInstance.put(endPoints.utility.update+id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -48,8 +70,13 @@ export const UtilityUpdateFunc = async (id: string) => {
 }
 
 export const UtilityDeleteFunc = async (id: string) => {
+  const token = cookies.get("token")
   try {
-    const response = await axiosInstance.post(endPoints.utility.delete+id);
+    const response = await axiosInstance.delete(endPoints.utility.delete+id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response?.data
   } catch (error) {
     if (axios.isAxiosError(error)) {

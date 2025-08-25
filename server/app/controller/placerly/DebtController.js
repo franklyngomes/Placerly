@@ -1,5 +1,6 @@
 const HttpCode = require("../../helper/HttpCode");
 const {DebtModel, DebtSchemaJoi} = require("../../model/placerly/DebtModel");
+const {UserModel} = require("../../model/placerly/UserModel")
 
 class DebtController {
   async createDebt(req, res) {

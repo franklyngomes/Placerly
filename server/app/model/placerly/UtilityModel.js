@@ -13,7 +13,7 @@ const UtilitySchemaJoi = Joi.object({
   provider: Joi.string().required("Provider is required"),
   accountNumber: Joi.string().required("Account Number is required"),
   billingCycle: Joi.string(),
-  averageBill: Joi.number(),
+  outstandingBill: Joi.number(),
 });
 
 const UtilitySchema = new Schema(
@@ -34,7 +34,7 @@ const UtilitySchema = new Schema(
     billingCycle: {
       type: String,
     },
-    averageBill: {
+    outstandingBill: {
       type: Number,
     },
   },

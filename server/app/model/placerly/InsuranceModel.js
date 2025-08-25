@@ -3,10 +3,8 @@ const Schema = mongoose.Schema;
 const Joi = require("joi");
 
 const TypeOptions = {
-  LIFE: "Life Insurance",
-  HOME: "Home Insurance",
-  CAR: "Car Insurance",
-  HEALTH: "Health Insurance"
+  LIFE: "Life",
+  HOME: "Home",
 };
 
 const InsuranceSchemaJoi = Joi.object({
