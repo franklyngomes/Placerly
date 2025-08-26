@@ -9,7 +9,6 @@ function Transition() {
   const createTransitionMutation = CreateTransitionQuery()
   const deleteTransitionMutation = TransitionDeleteQuery()
   const transitions = data?.data || []
-  console.log(transitions)
   const [showExecutorForm, setShowExecutorForm] = useState(false);
   const [showBenificiaryForm, setShowBenificiaryForm] = useState(false);
   const { userid } = useStore()
