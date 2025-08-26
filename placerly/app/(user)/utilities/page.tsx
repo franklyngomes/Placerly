@@ -91,13 +91,13 @@ function Utilities() {
     <>
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight">Assets</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">Utilities</h2>
           <p className="text-neutral-400 text-sm mt-1">
-            Manage your cash and investment accounts
+            Manage your electricity and water accounts
           </p>
         </div>
         <div className="text-right">
-          <p className="text-sm text-neutral-400">Total Assets</p>
+          <p className="text-sm text-neutral-400">Total Pending Bill</p>
           <p className="text-2xl font-semibold text-green-400">
             {formatCurrency(totalEnergyValue + totalWaterValue)}
           </p>

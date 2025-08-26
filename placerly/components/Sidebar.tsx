@@ -33,7 +33,7 @@ const navigation = [
   { name: "Transition", href: "/transition", icon: UserRoundCheck },
 ];
 
-export function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
+export default function Sidebar({ className, id, onNavigate, onClose }: SidebarProps) {
   const pathname = usePathname();
   const cookies = new Cookies()
   const router = useRouter()

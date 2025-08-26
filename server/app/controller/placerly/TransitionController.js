@@ -1,5 +1,5 @@
 const HttpCode = require("../../helper/HttpCode");
-const {TransitionModel} = require("../../model/placerly/TransitionModel");
+const {TransitionModel, TransitionSchemaJoi} = require("../../model/placerly/TransitionModel");
 const {UserModel} = require("../../model/placerly/UserModel")
 
 class TransitionController {
@@ -20,7 +20,7 @@ class TransitionController {
 
       // Link to user (if you want to track transitions in user model)
       await UserModel.findByIdAndUpdate(req.user._id, {
-        $push: { transitions: transition._id },
+        $push: { transition: transition._id },
       });
 
       return res.status(HttpCode.create).json({

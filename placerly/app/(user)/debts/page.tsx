@@ -106,7 +106,7 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
              <div className="flex items-center justify-between mb-4">
                <div>
                  <div className="flex items-center gap-2">
-                   <CreditCard className="h-5 w-5 text-green-400" />
+                   <CreditCard className="h-5 w-5 text-red-400" />
                    <h3 className="text-[15px] font-medium tracking-tight">Credit Cards</h3>
                  </div>
                  <p className="text-xs text-neutral-400 mt-1">
@@ -115,7 +115,7 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
                </div>
                <button
                  onClick={() => setShowCreditForm(!showCreditForm)}
-                 className="flex items-center gap-1 px-3 py-1.5 bg-green-500/10 text-green-400 rounded-md text-xs font-medium hover:bg-green-500/20 transition-colors"
+                 className="flex items-center gap-1 px-3 py-1.5 bg-red-500/10 text-red-400 rounded-md text-xs font-medium hover:bg-red-500/20 transition-colors"
                >
                  <Plus className="h-3 w-3" />
                  Add
@@ -128,7 +128,7 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
                    <select
                      value={newDebt.provider}
                      onChange={(e) => setNewDebt({ ...newDebt, provider: e.target.value })}
-                     className="w-full bg-white/5 outline outline-white/10 focus:outline-green-500/40 text-neutral-100 rounded-md px-3 py-2 text-[13px]"
+                     className="w-full bg-white/5 outline outline-white/10 focus:outline-red-500/40 text-neutral-100 rounded-md px-3 py-2 text-[13px]"
                    >
                      <option value="">Select provider</option>
                      {creditProviders.map(provider => (
@@ -142,20 +142,20 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
                      placeholder="Account name"
                      value={newDebt.accountName}
                      onChange={(e) => setNewDebt({ ...newDebt, accountName: e.target.value })}
-                     className="w-full bg-white/5 outline outline-white/10 focus:outline-green-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2 text-[13px] text-neutral-100"
+                     className="w-full bg-white/5 outline outline-white/10 focus:outline-red-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2 text-[13px] text-neutral-100"
                    />
                    <input
                      type="text"
                      placeholder="Account number"
                      value={newDebt.accountNumber}
                      onChange={(e) => setNewDebt({ ...newDebt, accountNumber: e.target.value })}
-                     className="w-full bg-white/5 outline outline-white/10 focus:outline-green-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2 text-[13px] text-neutral-100"
+                     className="w-full bg-white/5 outline outline-white/10 focus:outline-red-500/40 placeholder:text-neutral-500 rounded-md px-3 py-2 text-[13px] text-neutral-100"
                    />
                    <div className="flex gap-2">
                      <button
                        onClick={() => handleCreateDebt('Credit')}
                        disabled={createDebtMutation.isPending}
-                       className="flex-1 bg-green-500 text-white rounded-md px-3 py-2 text-[13px] font-medium hover:bg-green-600 transition-colors disabled:opacity-50"
+                       className="flex-1 bg-red-500 text-white rounded-md px-3 py-2 text-[13px] font-medium hover:bg-red-600 transition-colors disabled:opacity-50"
                      >
                        {createDebtMutation.isPending ? 'Adding...' : 'Add Account'}
                      </button>
@@ -176,7 +176,7 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
                    <div className="flex-1">
                      <div className="flex items-center justify-between">
                        <h4 className="text-[13px] font-medium text-neutral-100">{debt.provider}</h4>
-                       <span className="text-[13px] font-semibold text-green-400">
+                       <span className="text-[13px] font-semibold text-red-400">
                          {formatCurrency(debt.outstandingAmount)}
                        </span>
                      </div>

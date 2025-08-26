@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Sidebar } from "@/components/Sidebar";
+import  Sidebar  from "@/components/Sidebar";
 import Image from "next/image";
 
 export function MobileHeader() {
