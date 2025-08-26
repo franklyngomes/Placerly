@@ -35,10 +35,10 @@ export default function Debts() {
   const mortgageDebts = debts.filter(debt => debt.type === 'Mortgage');
 
 const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
-    if (!newDebt.accountName || !newDebt.provider) return;
+    if (!newDebt.accountName || !newDebt.provider || !userid) return;
 
     await createDebtMutation.mutateAsync({
-      userId: userid,
+      userId: userid as string,
       accountName: newDebt.accountName,
       type,
       accountNumber: newDebt.accountNumber,

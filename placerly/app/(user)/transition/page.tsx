@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { CreateTransitionQuery, TransitionListQuery, TransitionDeleteQuery, TransitionDetailsQuery, TransitionUpdateQuery } from "../../../api/query/TransitionQuery"
+import { CreateTransitionQuery, TransitionListQuery, TransitionDeleteQuery } from "../../../api/query/TransitionQuery"
 import { useStore } from "@/store"
 import { Plus, Trash2, UserPen } from "lucide-react"
 
@@ -9,6 +9,7 @@ function Transition() {
   const createTransitionMutation = CreateTransitionQuery()
   const deleteTransitionMutation = TransitionDeleteQuery()
   const transitions = data?.data || []
+  console.log(transitions)
   const [showExecutorForm, setShowExecutorForm] = useState(false);
   const [showBenificiaryForm, setShowBenificiaryForm] = useState(false);
   const { userid } = useStore()
@@ -24,7 +25,7 @@ function Transition() {
   const beneficiaryTrn = transitions.filter(trn => trn.type === 'Benificiary');
 
   const handleCreateTransition = async (type: 'Executor' | 'Benificiary') => {
-    if (!newTransition.name || !newTransition.email || !newTransition.phone) return;
+    if (!newTransition.name || !newTransition.email || !newTransition.phone || !userid) return;
 
     await createTransitionMutation.mutateAsync({
       userId: userid,

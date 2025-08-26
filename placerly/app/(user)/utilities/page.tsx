@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { Plus, Trash2,DollarSign, TrendingUp, PlugZap, Droplet } from "lucide-react";
+import { Plus, Trash2, PlugZap, Droplet } from "lucide-react";
 import { useStore } from "@/store";
 import {CreateUtilityQuery, UtilityDeleteQuery,UtilityListQuery} from "../../../api/query/UtilityQuery"
 
@@ -37,7 +37,7 @@ function Utilities() {
   const waterUtility = utilities.filter(util => util.type === 'Water');
 
   const handleCreateUtility = async (type: 'Energy' | 'Water') => {
-    if (!newUtility.accountNumber || !newUtility.provider) return;
+    if (!newUtility.accountNumber || !newUtility.provider || !userid) return;
 
     await createUtilityMutation.mutateAsync({
       userId: userid,
@@ -309,7 +309,7 @@ function Utilities() {
                   </div>
                 </div>
                 <button
-                  onClick={() => handleDeleteUtility(util.id)}
+                  onClick={() => handleDeleteUtility(util._id)}
                   disabled={deleteUtilityMutation.isPending}
                   className="ml-3 p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors disabled:opacity-50"
                 >

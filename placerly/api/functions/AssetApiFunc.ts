@@ -2,9 +2,10 @@ import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
 import { Cookies } from "react-cookie";
+import { AssetFormProps, AssetResponse } from "@/types/types";
 const cookies = new Cookies()
 
-export const CreateAssetFunc = async (Data) => {
+export const CreateAssetFunc = async (Data : AssetFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.post(endPoints.assets.create, Data,{
@@ -20,7 +21,7 @@ export const CreateAssetFunc = async (Data) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const GetAllAssetFunc = async (Data) => {
+export const GetAllAssetFunc = async () : Promise<AssetResponse>  => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.get(endPoints.assets.get_asset,{
@@ -52,7 +53,7 @@ export const AssetDetailsFunc = async (id: string) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const AssetUpdateFunc = async (id: string) => {
+export const AssetUpdateFunc = async (id: string, data : AssetFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.put(endPoints.assets.update+id, {

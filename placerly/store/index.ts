@@ -12,7 +12,6 @@ export const useStore = create<StoreState>()(
     }),
     {
       name: 'app-storage', // key in localStorage
-      // storage: () => sessionStorage, // uncomment if you prefer session-only persistence
     }
   )
 )

@@ -2,16 +2,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {InsuranceDeleteFunc, InsuranceDetailsFunc,InsuranceUpdateFunc,CreateInsuranceFunc,GetAllInsuranceFunc} from "../functions/InsuranceApiFunc"
 import { queryClient } from "@/app/provider";
+import { InsuranceFormProps, InsuranceResponse } from "@/types/types";
 
 export const InsuranceListQuery = () => {
-  return useQuery({
+  return useQuery<InsuranceResponse>({
     queryKey: ["InsuranceList"],
     queryFn: GetAllInsuranceFunc
   })
 }
 export const CreateInsuranceQuery = () => {
   return useMutation({
-    mutationFn: (payload) => CreateInsuranceFunc(payload),
+    mutationFn: (payload : InsuranceFormProps) => CreateInsuranceFunc(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["InsuranceList"] })
     },
@@ -26,7 +27,7 @@ export const InsuranceDetailsQuery = (id: string, enabled: boolean) => {
 }
 export const InsuranceUpdateQuery = () => {
   return useMutation({
-    mutationFn: ({ editId, payload }: { editId: string; payload}) => InsuranceUpdateFunc({ editId, payload }),
+    mutationFn: ({ editId, payload }: { editId: string; payload : InsuranceFormProps}) => InsuranceUpdateFunc(editId, payload ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["InsuranceList"] })
       queryClient.invalidateQueries({ queryKey: ["InsuranceDetails"] })

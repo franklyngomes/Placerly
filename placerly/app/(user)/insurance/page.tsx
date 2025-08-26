@@ -37,7 +37,7 @@ function Insurances() {
   const homeInsurance = insurances.filter(insc => insc.type === 'Home');
 
   const handleCreateInsurance = async (type: 'Life' | 'Home') => {
-    if (!newInsurance.policyNumber || !newInsurance.provider) return;
+    if (!newInsurance.policyNumber || !newInsurance.provider || !userid) return;
 
     await createInsuranceMutation.mutateAsync({
       userId: userid,

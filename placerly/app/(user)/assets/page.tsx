@@ -36,10 +36,10 @@ export default function Assets() {
   const stocksAssets = assets.filter(asset => asset.type === 'Stocks');
 
   const handleCreateAsset = async (type: 'Cash' | 'Stocks') => {
-    if (!newAsset.accountName || !newAsset.provider) return;
+    if (!newAsset.accountName || !newAsset.provider || !userid) return;
 
     await createAssetMutation.mutateAsync({
-      userId: userid,
+      userId: userid as string,
       accountName: newAsset.accountName,
       type,
       accountNumber: newAsset.accountNumber,
@@ -292,7 +292,7 @@ export default function Assets() {
                   </div>
                 </div>
                 <button
-                  onClick={() => handleDeleteAsset(asset.id)}
+                  onClick={() => handleDeleteAsset(asset._id)}
                   disabled={deleteAssetMutation.isPending}
                   className="ml-3 p-1.5 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors disabled:opacity-50"
                 >

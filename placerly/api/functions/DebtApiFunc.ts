@@ -2,9 +2,10 @@ import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
 import { Cookies } from "react-cookie";
+import { DebtFormProps, DebtResponse } from "@/types/types";
 const cookies = new Cookies()
 
-export const CreateDebtFunc = async (Data) => {
+export const CreateDebtFunc = async (Data : DebtFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.post(endPoints.debts.create, Data, {
@@ -20,7 +21,7 @@ export const CreateDebtFunc = async (Data) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const GetAllDebtFunc = async (Data) => {
+export const GetAllDebtFunc = async () : Promise<DebtResponse> => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.get(endPoints.debts.get_debt, {
@@ -52,7 +53,7 @@ export const DebtDetailsFunc = async (id: string) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const DebtUpdateFunc = async (id: string) => {
+export const DebtUpdateFunc = async (id: string, payload : DebtFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.put(endPoints.debts.update + id, {

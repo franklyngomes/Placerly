@@ -2,9 +2,10 @@ import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
 import { Cookies } from "react-cookie";
+import { TransitionFormProps, TransitionResponse } from "@/types/types";
 const cookies = new Cookies()
 
-export const CreateTransitionFunc = async (Data) => {
+export const CreateTransitionFunc = async (Data : TransitionFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.post(endPoints.transition.create, Data,{
@@ -20,7 +21,7 @@ export const CreateTransitionFunc = async (Data) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const GetAllTransitionFunc = async (Data) => {
+export const GetAllTransitionFunc = async () : Promise<TransitionResponse> => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.get(endPoints.transition.get_transition,{
@@ -52,10 +53,10 @@ export const TransitionDetailsFunc = async (id: string) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const TransitionUpdateFunc = async (id: string) => {
+export const TransitionUpdateFunc = async (id: string, payload: TransitionFormProps) => {
   const token = cookies.get("token")
   try {
-    const response = await axiosInstance.put(endPoints.transition.update+id,{
+    const response = await axiosInstance.put(endPoints.transition.update+id, payload,{
       headers: {
         Authorization: `Bearer ${token}`
       }

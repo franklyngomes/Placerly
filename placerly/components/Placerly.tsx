@@ -103,7 +103,7 @@ function Placerly() {
                   <Banknote className="h-4 w-4 text-neutral-300" />
                 </div>
                 <div className="mt-2 text-xl font-semibold tracking-tight">
-                  {assets?.data.length ?? 0}/2
+                  {assets?.data?.length ?? 0}/2
                 </div>
                 <div className="text-xs text-neutral-500 mt-1">Cash & Shares</div>
               </div>
@@ -114,7 +114,7 @@ function Placerly() {
                   <CreditCard className="h-4 w-4 text-neutral-300" />
                 </div>
                 <div className="mt-2 text-xl font-semibold tracking-tight">
-                  {debt?.data.length ?? 0}/2
+                  {debt?.data?.length ?? 0}/2
                 </div>
                 <div className="text-xs text-neutral-500 mt-1">Cards & Mortgages</div>
               </div>
@@ -125,7 +125,7 @@ function Placerly() {
                   <ShieldCheck className="h-4 w-4 text-neutral-300" />
                 </div>
                 <div className="mt-2 text-xl font-semibold tracking-tight">
-                 {insurance?.data.length ?? 0}/2
+                 {insurance?.data?.length ?? 0}/2
                 </div>
                 <div className="text-xs text-neutral-500 mt-1">Life & Home</div>
               </div>
@@ -136,7 +136,7 @@ function Placerly() {
                   <PlugZap className="h-4 w-4 text-neutral-300" />
                 </div>
                 <div className="mt-2 text-xl font-semibold tracking-tight">
-                  {utility?.data.length ?? 0}/2
+                  {utility?.data?.length ?? 0}/2
                 </div>
                 <div className="text-xs text-neutral-500 mt-1">Energy & Water</div>
               </div>
@@ -177,18 +177,18 @@ function Placerly() {
             <h3 className="text-[15px] font-medium tracking-tight">Executors & Beneficiaries</h3>
             <p className="text-xs text-neutral-400 mt-1">Manage access to your digital footprint</p>
             <div className="mt-3 space-y-2">
-              {transition?.data.length === 0 ? (
+              {transition?.data?.length === 0 ? (
                 <div className="text-xs text-neutral-500 px-3 py-2">No people added yet.</div>
               ) : (
-                transition?.data.map((person, index) => (
+                transition?.data?.map((person, index) => (
                   <div key={index} className="flex items-center justify-between gap-3 rounded-md bg-white/[0.03] outline outline-white/10 p-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-custom-500/20 flex items-center justify-center text-custom-300 text-xs outline outline-custom-400/30">
+                      <div className={`h-8 w-8 rounded-full flex items-center justify-center ${person.type === 'Executor' ? "text-blue-300 outline-blue-400/30 bg-blue-500/20" : "text-custom-300 outline-custom-400/30 bg-custom-500/20"}  text-xs outline `}>
                         {person.name.slice(0, 1).toUpperCase()}
                       </div>
                       <div className="text-[13px]">{person.name}</div>
                     </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] bg-white/[0.04] outline  outline-white/10 ${person.type === 'executor' ? 'text-custom-300' : 'text-emerald-300'
+                    <span className={`px-2 py-0.5 rounded-full text-[11px] bg-white/[0.04] outline  outline-white/10 ${person.type === 'Executor' ? 'text-custom-300' : 'text-emerald-300'
                       }`}>
                       {person.type === 'Executor' ? 'Executor' : 'Beneficiary'}
                     </span>

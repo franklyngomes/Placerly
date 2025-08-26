@@ -2,9 +2,10 @@ import axios from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { endPoints } from "../endpoints/endPoints";
 import { Cookies } from "react-cookie";
+import { UtilityFormProps, UtilityResponse } from "@/types/types";
 const cookies = new Cookies()
 
-export const CreateUtilityFunc = async (Data) => {
+export const CreateUtilityFunc = async (Data: UtilityFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.post(endPoints.utility.create, Data,{
@@ -20,7 +21,7 @@ export const CreateUtilityFunc = async (Data) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const GetAllUtilityFunc = async (Data) => {
+export const GetAllUtilityFunc = async () : Promise<UtilityResponse> => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.get(endPoints.utility.get_utility,{
@@ -52,7 +53,7 @@ export const UtilityDetailsFunc = async (id: string) => {
     return { error: true, message: "Unexpected error" };
   }
 }
-export const UtilityUpdateFunc = async (id: string) => {
+export const UtilityUpdateFunc = async (id: string, payload: UtilityFormProps) => {
   const token = cookies.get("token")
   try {
     const response = await axiosInstance.put(endPoints.utility.update+id,{

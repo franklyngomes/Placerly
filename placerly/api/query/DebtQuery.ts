@@ -2,16 +2,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {DebtDetailsFunc, DebtDeleteFunc, DebtUpdateFunc, CreateDebtFunc, GetAllDebtFunc} from "../functions/DebtApiFunc"
 import { queryClient } from "@/app/provider";
+import { DebtFormProps, DebtResponse } from "@/types/types";
 
 export const DebtListQuery = () => {
-  return useQuery({
+  return useQuery<DebtResponse>({
     queryKey: ["DebtList"],
     queryFn: GetAllDebtFunc
   })
 }
 export const CreateDebtQuery = () => {
   return useMutation({
-    mutationFn: (payload) => CreateDebtFunc(payload),
+    mutationFn: (payload : DebtFormProps) => CreateDebtFunc(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DebtList"] })
     },
@@ -26,7 +27,7 @@ export const DebtDetailsQuery = (id: string, enabled: boolean) => {
 }
 export const DebtUpdateQuery = () => {
   return useMutation({
-    mutationFn: ({ editId, payload }: { editId: string; payload}) => DebtUpdateFunc({ editId, payload }),
+    mutationFn: ({ editId, payload }: { editId: string; payload : DebtFormProps}) => DebtUpdateFunc(editId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["DebtList"] })
       queryClient.invalidateQueries({ queryKey: ["DebtDetails"] })

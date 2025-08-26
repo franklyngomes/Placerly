@@ -2,16 +2,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {UtilityDeleteFunc,UtilityDetailsFunc,UtilityUpdateFunc,CreateUtilityFunc,GetAllUtilityFunc} from "../functions/UtilityApiFunc"
 import { queryClient } from "@/app/provider";
+import { UtilityFormProps, UtilityResponse } from "@/types/types";
 
 export const UtilityListQuery = () => {
-  return useQuery({
+  return useQuery<UtilityResponse>({
     queryKey: ["UtilityList"],
     queryFn: GetAllUtilityFunc
   })
 }
 export const CreateUtilityQuery = () => {
   return useMutation({
-    mutationFn: (payload) => CreateUtilityFunc(payload),
+    mutationFn: (payload : UtilityFormProps) => CreateUtilityFunc(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["UtilityList"] })
     },
@@ -26,7 +27,7 @@ export const UtilityDetailsQuery = (id: string, enabled: boolean) => {
 }
 export const UtilityUpdateQuery = () => {
   return useMutation({
-    mutationFn: ({ editId, payload }: { editId: string; payload}) => UtilityUpdateFunc({ editId, payload }),
+    mutationFn: ({ editId, payload }: { editId: string; payload : UtilityFormProps}) => UtilityUpdateFunc( editId, payload ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["UtilityList"] })
       queryClient.invalidateQueries({ queryKey: ["UtilityDetails"] })
