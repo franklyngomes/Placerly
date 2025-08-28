@@ -6,6 +6,7 @@ const path = require("path")
 const flash = require('connect-flash')
 const session = require('express-session')
 const cors = require('cors')
+const MongoStore = require("connect-mongo");
 
 const DatabaseConnection = require("./app/config/dbCon")
 DatabaseConnection()
@@ -14,15 +15,26 @@ app.set('views', 'views')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "http://localhost:3000",  // your frontend URL
+  origin: "http://localhost:3000", 
   credentials: true
 }))
 
-app.use(session({
-  secret: process.env.SESSION_SECRET_KEY,
-  saveUninitialized: true,
-  resave: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+      collectionName: "sessions"
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60, // 1 hour
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production"
+    }
+  })
+);
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.messages = req.flash("message");
