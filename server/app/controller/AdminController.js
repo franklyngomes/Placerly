@@ -83,9 +83,44 @@ class AdminController {
   }
   async FaqListPage(req, res) {
     try {
-      await PricingModel.find();
       return res.render("faq/list", {
         title: "FAQ List",
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+  async SigninPage(req, res) {
+    try {
+      return res.render("signin", {
+        title: "Signin",
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+  async SignupPage(req, res) {
+    try {
+      return res.render("signup", {
+        title: "Signup",
+      });
+    } catch (error) {
+      return res.status(HttpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+  async ForgotPasswordPage(req, res) {
+    try {
+      return res.render("forgot-password", {
+        title: "Forgot Password",
       });
     } catch (error) {
       return res.status(HttpCode.serverError).json({

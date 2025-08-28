@@ -66,4 +66,9 @@ router.get("/faq-details/:id",FaqController.faqDetails)
 router.patch("/faq-update/:id",upload.none(),FaqController.updateFaq)
 router.delete("/delete-faq/:id", FaqController.deleteFaq)
 
+//Auth Routes
+router.get('/signin', AdminController.SigninPage)
+router.get('/signup', AdminController.SignupPage)
+router.get('/forgot-password', AdminController.ForgotPasswordPage)
+
 module.exports = router;

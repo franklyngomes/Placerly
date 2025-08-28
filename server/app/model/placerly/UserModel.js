@@ -28,7 +28,7 @@ const UserSchema = new Schema({
     type: String,
   },
   phone: {
-
+    type: String,
   },
   assets: [{
     type: mongoose.Schema.Types.ObjectId,
