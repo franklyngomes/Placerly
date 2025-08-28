@@ -5,6 +5,7 @@ export const endPoints = {
   verify_email: "/verify-email",
   forgot_password: "/forgot-password",
   reset_password: "/reset-password",
+  refresh_token: "/refresh-token",
   assets: {
     create: "/create-asset",
     get_asset: "/get-all-asset",

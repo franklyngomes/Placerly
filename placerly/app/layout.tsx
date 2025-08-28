@@ -2,6 +2,7 @@ import { Outfit } from 'next/font/google';
 import './globals.css';
 import { Metadata } from 'next';
 import Provider from './provider';
+import { Theme } from "@radix-ui/themes";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -20,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.className} dark:bg-gray-900`}>
-        <Provider>
-        {children}
-        </Provider>
+        <Theme>
+          <Provider>
+            {children}
+          </Provider>
+        </Theme>
       </body>
     </html>
   );

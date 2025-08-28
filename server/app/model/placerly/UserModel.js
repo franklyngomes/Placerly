@@ -57,6 +57,10 @@ const UserSchema = new Schema({
   verificationCode: {
     type: String,
   },
+  refreshToken: {
+    type: String,
+    default: null
+  },
   verificationCodeValidation: {
     type: Number,
   },

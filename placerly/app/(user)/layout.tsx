@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "../globals.css";
 import Sidebar  from "@/components/Sidebar";
-import { MobileHeader } from "@/components/MobileHeader";
+import { MobileHeader } from "@/components/MobileHeader"
 
 export const metadata: Metadata = {
   title: "Dashboard",

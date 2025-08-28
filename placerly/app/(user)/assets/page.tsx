@@ -1,8 +1,10 @@
 "use client"
 import { useState } from "react";
-import { Plus, Trash2,DollarSign, TrendingUp } from "lucide-react";
+import { Plus, Trash2, DollarSign, TrendingUp } from "lucide-react";
 import { AssetListQuery, CreateAssetQuery, AssetDeleteQuery } from "../../../api/query/AssetsQuery";
 import { useStore } from "@/store";
+import { Spinner } from "@radix-ui/themes";
+import toast from "react-hot-toast";
 
 const cashProviders = [
   "Barclays", "Lloyds", "Marcus", "Natwest", "HSBC", "Monzo",
@@ -44,6 +46,14 @@ export default function Assets() {
       type,
       accountNumber: newAsset.accountNumber,
       provider: newAsset.provider
+    }, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
     });
 
     // Reset form
@@ -55,7 +65,15 @@ export default function Assets() {
   };
 
   const handleDeleteAsset = async (id: string) => {
-    await deleteAssetMutation.mutateAsync(id);
+    await deleteAssetMutation.mutateAsync(id,  {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -71,7 +89,7 @@ export default function Assets() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-neutral-400">Loading assets...</div>
+        <div className="text-white"><Spinner size="3" /></div>
       </div>
     );
   }

@@ -41,7 +41,7 @@ export default function SignIn() {
           toast.error(res.message);
           return;
         }
-        cookies.set("token", res?.token)
+        cookies.set("token", res?.accessToken)
         setUserId(res?.user?.id)
         setUser(res?.user)
         reset()

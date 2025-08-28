@@ -3,6 +3,8 @@ import { useState } from "react"
 import { CreateTransitionQuery, TransitionListQuery, TransitionDeleteQuery } from "../../../api/query/TransitionQuery"
 import { useStore } from "@/store"
 import { Plus, Trash2, UserPen } from "lucide-react"
+import { Spinner } from "@radix-ui/themes"
+import toast from "react-hot-toast"
 
 function Transition() {
   const { data, isLoading, error } = TransitionListQuery()
@@ -32,6 +34,14 @@ function Transition() {
       type,
       email: newTransition.email,
       phone: newTransition.phone
+    }, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
     });
 
     // Reset form
@@ -41,7 +51,15 @@ function Transition() {
   };
 
   const handleDeleteTransition = async (id: string) => {
-    await deleteTransitionMutation.mutateAsync(id);
+    await deleteTransitionMutation.mutateAsync(id, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -54,7 +72,7 @@ function Transition() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-neutral-400">Loading transitions...</div>
+        <div className="text-white"><Spinner size="3" /></div>
       </div>
     );
   }
@@ -77,7 +95,7 @@ function Transition() {
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Executors */}
+        {/* Executors */}
         <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
           <div className="flex items-center justify-between mb-4">
             <div>

@@ -25,7 +25,7 @@ const AuthCheck = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(HttpCode.serverError).json({
+    return res.status(HttpCode.unauthorized).json({
       status: false,
       message: "Invalid or expired token",
     });

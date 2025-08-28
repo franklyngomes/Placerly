@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Plus, Trash2, PlugZap, Droplet } from "lucide-react";
 import { useStore } from "@/store";
 import {CreateUtilityQuery, UtilityDeleteQuery,UtilityListQuery} from "../../../api/query/UtilityQuery"
+import { Spinner } from "@radix-ui/themes";
+import toast from "react-hot-toast";
 
 const energyProviders = [
   "British Gas", "Centrica", "EDF Energy", "National Grid", 
@@ -46,6 +48,14 @@ function Utilities() {
       accountNumber: newUtility.accountNumber,
       provider: newUtility.provider,
       billingCycle: newUtility.billingCycle
+    }, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
     });
 
     // Reset form
@@ -57,7 +67,15 @@ function Utilities() {
   };
 
   const handleDeleteUtility = async (id: string) => {
-    await deleteUtilityMutation.mutateAsync(id);
+    await deleteUtilityMutation.mutateAsync(id, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -73,7 +91,7 @@ function Utilities() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-neutral-400">Loading utils...</div>
+        <div className="text-white"><Spinner size="3" /></div>
       </div>
     );
   }

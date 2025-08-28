@@ -4,6 +4,8 @@ import { House, Umbrella } from "lucide-react";
 import { Plus, Trash2 } from "lucide-react";
 import { InsuranceListQuery, CreateInsuranceQuery, InsuranceDeleteQuery } from "../../../api/query/InsuranceQuery"
 import { useStore } from "@/store";
+import { Spinner } from "@radix-ui/themes";
+import toast from "react-hot-toast";
 
 const lifeProviders = [
   "Aviva", "Royal London", "Legal & General", "Scottish Widows",
@@ -46,6 +48,14 @@ function Insurances() {
       coverageAmount: newInsurance.coverageAmount,
       provider: newInsurance.provider,
       premium: newInsurance.premium
+    }, {
+      onSuccess: (res) => {
+       if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
     });
 
     // Reset form
@@ -57,7 +67,15 @@ function Insurances() {
   };
 
   const handleDeleteInsurance = async (id: string) => {
-    await deleteInsuranceMutation.mutateAsync(id);
+    await deleteInsuranceMutation.mutateAsync(id, {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -73,7 +91,7 @@ function Insurances() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-neutral-400">Loading Insurances...</div>
+        <div className="text-white"><Spinner size="3" /></div>
       </div>
     );
   }

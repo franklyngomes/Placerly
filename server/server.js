@@ -12,7 +12,10 @@ DatabaseConnection()
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:3000",  // your frontend URL
+  credentials: true
+}))
 
 app.use(session({
   secret: process.env.SESSION_SECRET_KEY,

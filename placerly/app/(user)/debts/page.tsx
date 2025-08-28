@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Plus, Trash2,CreditCard, HandCoins} from "lucide-react";
 import {DebtDeleteQuery, DebtListQuery, CreateDebtQuery} from "../../../api/query/DebtQuery"
 import { useStore } from "@/store";
+import { Spinner } from "@radix-ui/themes";
+import toast from "react-hot-toast";
 
 const creditProviders = [
   "American Express", "Barclays", "HSBC", "Halifax", "Lloyds", 
@@ -43,6 +45,15 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
       type,
       accountNumber: newDebt.accountNumber,
       provider: newDebt.provider
+    },
+   {
+      onSuccess: (res) => {
+        if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
     });
 
     // Reset form
@@ -53,7 +64,15 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
     setMortgageSearch("");
   };
     const handleDeleteDebt = async (id: string) => {
-    await deleteDebtMutation.mutateAsync(id);
+    await deleteDebtMutation.mutateAsync(id, {
+      onSuccess: (res) => {
+       if (res.error) {
+          toast.error(res?.message)
+        }else if(res?.status){
+          toast.success(res?.message)
+        }
+      },
+    });
   };
 
   const formatCurrency = (value: number) => {
@@ -69,7 +88,7 @@ const handleCreateDebt = async (type: 'Credit' | 'Mortgage') => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-neutral-400">Loading debts...</div>
+        <div className="text-white"><Spinner size="3" /></div>
       </div>
     );
   }

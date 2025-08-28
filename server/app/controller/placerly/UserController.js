@@ -111,15 +111,17 @@ class UserController {
       });
     }
   }
-  async signin(req, res, next) {
+  // Signin
+  async signin(req, res) {
     try {
       const { email, password } = req.body;
       if (!email || !password) {
-        res.status(httpCode.notFound).json({
+        return res.status(httpCode.badRequest).json({
           status: false,
           message: "All fields are required",
         });
       }
+
       const user = await UserModel.findOne({ email });
       if (!user) {
         return res.status(httpCode.badRequest).json({
@@ -127,24 +129,39 @@ class UserController {
           message: "User not found!",
         });
       }
-      const isMatch = comparePassword(password, user.password);
 
+      const isMatch = comparePassword(password, user.password);
       if (!isMatch) {
         return res.status(httpCode.badRequest).json({
           status: false,
-          message: "Invalid Password!",
+          message: "Invalid password!",
         });
       }
-      const token = jwt.sign(
-        {
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        },
+
+      // Access Token
+      const accessToken = jwt.sign(
+        { _id: user._id, email: user.email },
         process.env.JWT_SECRET_KEY,
-        { expiresIn: "3d" }
+        { expiresIn: "1m" }
       );
+
+      // Refresh Token
+      const refreshToken = jwt.sign(
+        { _id: user._id, email: user.email },
+        process.env.JWT_REFRESH_SECRET_KEY,
+        { expiresIn: "7d" }
+      );
+
+      user.refreshToken = refreshToken;
+      await user.save();
+
+      // HttpOnly cookie for refresh
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+
       return res.status(httpCode.success).json({
         status: true,
         message: "Logged in successfully",
@@ -154,7 +171,7 @@ class UserController {
           lastName: user.lastName,
           email: user.email,
         },
-        token: token,
+        accessToken, // send to frontend
       });
     } catch (error) {
       return res.status(httpCode.serverError).json({
@@ -163,6 +180,75 @@ class UserController {
       });
     }
   }
+
+  // Refresh Token
+  async refreshToken(req, res) {
+    try {
+      const token = req.cookies.refreshToken;
+      if (!token) {
+        return res.status(httpCode.unauthorized).json({
+          status: false,
+          message: "Refresh token missing",
+        });
+      }
+
+      const user = await UserModel.findOne({ refreshToken: token });
+      if (!user) {
+        return res.status(httpCode.forbidden).json({
+          status: false,
+          message: "Invalid refresh token",
+        });
+      }
+
+      jwt.verify(
+        token,
+        process.env.JWT_REFRESH_SECRET_KEY,
+        async (err, decoded) => {
+          if (err) {
+            return res.status(httpCode.unauthorized).json({
+              status: false,
+              message: "Invalid or expired refresh token",
+            });
+          }
+
+          // New Access Token
+          const newAccessToken = jwt.sign(
+            { _id: user._id, email: user.email },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "3hr" }
+          );
+
+          // Optionally rotate refresh token
+          const newRefreshToken = jwt.sign(
+            { _id: user._id, email: user.email },
+            process.env.JWT_REFRESH_SECRET_KEY,
+            { expiresIn: "7d" }
+          );
+
+          user.refreshToken = newRefreshToken;
+          await user.save();
+
+          res.cookie("refreshToken", newRefreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+          });
+
+          return res.status(httpCode.success).json({
+            status: true,
+            message: "New access token generated",
+            accessToken: newAccessToken,
+          });
+        }
+      );
+    } catch (error) {
+      return res.status(httpCode.serverError).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+
   async userProfileDetails(req, res) {
     try {
       const id = req.user._id;
