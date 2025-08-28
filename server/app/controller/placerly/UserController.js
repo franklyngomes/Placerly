@@ -142,7 +142,7 @@ class UserController {
       const accessToken = jwt.sign(
         { _id: user._id, email: user.email },
         process.env.JWT_SECRET_KEY,
-        { expiresIn: "1m" }
+        { expiresIn: "3hr" }
       );
 
       // Refresh Token
