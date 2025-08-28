@@ -4,7 +4,7 @@ import { endPoints } from "../endpoints/endPoints";
 
 
 
-const baseURL = "http://localhost:5000/api";
+const baseURL = "https://placerly.onrender.com/api";
 const cookies = new Cookies()
 
 export const axiosInstance = axios.create({

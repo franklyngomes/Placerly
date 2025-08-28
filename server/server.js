@@ -15,7 +15,7 @@ app.set('views', 'views')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "http://localhost:3000", 
+  origin: "https://placerly-1.onrender.com", 
   credentials: true
 }))
 
