@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http', // Specify the protocol (e.g., 'http', 'https')
-        hostname: 'localhost', // The exact hostname of the image source
+        protocol: 'https', // Specify the protocol (e.g., 'http', 'https')
+        hostname: 'placerly.onrender', // The exact hostname of the image source
       },
     ],
   },
