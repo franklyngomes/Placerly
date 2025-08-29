@@ -57,8 +57,8 @@ class AboutController {
         mission,
         values,
       });
-      if (req.file) {
-        aboutData.image = req.file.path.replace(/\\/g,"/");
+      if (req.files) {
+        aboutData.image = req.files[0].path.replace(/\\/g,"/");
       }
       const { error, value } = AboutSchemaJoi.validate(aboutData);
       const data = await value.save();
@@ -124,7 +124,7 @@ class AboutController {
           message: "About not found!",
         });
       }
-      if (req.file && req.file.image) {
+      if (req.file) {
         if (updateData.image) {
           if (fsSync.existsSync(updateData.image)) {
             await fs.unlink(updateData.image);
