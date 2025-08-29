@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "https://placerly-1.onrender.com",
   "https://placerly.vercel.app",
-  "https://placerly.onrender.com/"
+  "https://placerly.onrender.com"
 ];
 app.use(
   cors({
