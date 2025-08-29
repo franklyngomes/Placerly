@@ -15,16 +15,21 @@ app.set("views", "views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  "https://placerly-1.onrender.com",
+  "https://placerly.vercel.app"
+];
 app.use(
   cors({
-    origin: "https://placerly-1.onrender.com",
-    credentials: true,
-  })
-);
-app.use(
-  cors({
-    origin: "https://placerly.vercel.app/",
-    credentials: true,
+    origin:function (origin , callback){
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.includes(origin)){
+        callback(null, true)
+      }else{
+        callback(new Error("Not allowed by CORS"))
+      }
+    },
+    credentials: true
   })
 );
 
