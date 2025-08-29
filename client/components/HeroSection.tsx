@@ -104,7 +104,7 @@ const HeroSection = () => {
               <div className="hero-img" >
                 <Image
                   className="img-card img-fluid"
-                  src={`http://localhost:5000/${banner?.secondaryImage}`}
+                  src={`https://placerly.onrender.com/${banner?.secondaryImage}`}
                   alt="Image card"
                   data-aos="fade-down"
                   data-aos-delay="600"
@@ -115,7 +115,7 @@ const HeroSection = () => {
                 />
                 <Image
                   className="img-main img-fluid rounded-4"
-                  src={`http://localhost:5000/${banner?.primaryImage}`}
+                  src={`https://placerly.onrender.com/${banner?.primaryImage}`}
                   alt="Hero Image"
                   data-aos="fade-in"
                   data-aos-delay="500"

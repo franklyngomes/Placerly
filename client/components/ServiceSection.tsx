@@ -39,7 +39,7 @@ const ServiceSection = () => {
                       <span className="icon mb-4">
                         <Image
                           alt="Service Icon"
-                          src={`http://localhost:5000/${item.image}`}
+                          src={`https://placerly.onrender.com/${item.image}`}
                           width={40}
                           height={40}
                         />

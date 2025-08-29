@@ -48,7 +48,7 @@ const TestimonialSection = () => {
                     <div className="author-img">
                       <Image
                         className="rounded-circle img-fluid"
-                        src={`http://localhost:5000/${item.image}`}
+                        src={`https://placerly.onrender.com/${item.image}`}
                         alt="Author"
                         width={50}
                         height={50}
