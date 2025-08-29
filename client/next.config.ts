@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https', // Specify the protocol (e.g., 'http', 'https')
-        hostname: 'placerly.onrender', // The exact hostname of the image source
+        hostname: 'placerly.onrender.com', // The exact hostname of the image source
       },
     ],
   },

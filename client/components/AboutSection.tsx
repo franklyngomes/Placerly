@@ -60,7 +60,7 @@ const AboutSection = () => {
               <div className="img-wrap position-relative">
                 <Image
                   className="img-fluid rounded-4"
-                  src={`https://placerly.onrender.com//${about?.image}`}
+                  src={`https://placerly.onrender.com/${about?.image}`}
                   alt="About"
                   data-aos="fade-up"
                   data-aos-delay="0"
