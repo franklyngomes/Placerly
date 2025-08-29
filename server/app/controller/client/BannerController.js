@@ -58,10 +58,10 @@ class BannerController {
         description,
       });
       if (req.files && req.files.primaryImage) {
-        bannerData.primaryImage = req.files.primaryImage[0].path.replace(/\\/g,"/")
+        bannerData.primaryImage = req.files.primaryImage.path.replace(/\\/g,"/")
       }
       if (req.files && req.files.secondaryImage) {
-        bannerData.secondaryImage = req.files.secondaryImage[0].path.replace(/\\/g,"/");
+        bannerData.secondaryImage = req.files.secondaryImage.path.replace(/\\/g,"/");
       }
       const { error, value } = BannerSchemaJoi.validate(bannerData);
       const data = await value.save();
@@ -137,8 +137,8 @@ class BannerController {
             await fs.unlink(updateData.primaryImage);
             await fs.unlink(updateData.secondaryImage);
           }
-          updateData.primaryImage = req.files.primaryImage[0].path.replace(/\\/g,"/");
-          updateData.secondaryImage = req.files.secondaryImage[0].path.replace(/\\/g,"/");
+          updateData.primaryImage = req.files.primaryImage.path.replace(/\\/g,"/");
+          updateData.secondaryImage = req.files.secondaryImage.path.replace(/\\/g,"/");
         }
       }
 

@@ -129,7 +129,7 @@ class AboutController {
           if (fsSync.existsSync(updateData.image)) {
             await fs.unlink(updateData.image);
           }
-          updateData.image = req.files.image[0].path.replace(/\\/g,"/");
+          updateData.image = req.files.image.path.replace(/\\/g,"/");
         }
       }
       await updateData.save();
