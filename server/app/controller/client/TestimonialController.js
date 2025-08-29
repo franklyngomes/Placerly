@@ -88,12 +88,12 @@ class TestimonialController {
           message: "Testimonial not found!",
         });
       }
-      if (req.files && req.files.image) {
+      if (req.file) {
         if (updateData.image) {
           if (fsSync.existsSync(updateData.image)) {
             await fs.unlink(updateData.image);
           }
-          updateData.image = req.files.image.path.replace(/\\/g,"/");
+          updateData.image = req.file.path.replace(/\\/g,"/");
         }
       }
       await updateData.save();
