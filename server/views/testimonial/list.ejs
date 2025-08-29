@@ -332,6 +332,9 @@
         $.ajax({
           url: "/list-testimonial",
           type: "GET",
+           xhrFields: {
+              withCredentials: true,
+            },
           success: function (response) {
             const services = response.data;
             const tbody = $("#testimonialTableBody");
@@ -381,6 +384,9 @@
             url: `/delete-testimonial/${id}`,
             async: true,
             method: "DELETE",
+             xhrFields: {
+              withCredentials: true,
+            },
             success: function (response) {
               $("#flashMessage").html(
                 `<div class="alert alert-success" role="alert">${response.message}</div>`
@@ -421,6 +427,9 @@
             data: formData,
             processData: false,
             contentType: false,
+             xhrFields: {
+              withCredentials: true,
+            },
             success: function (response) {
               $("#flashMessage").html(
                 `<div class="alert alert-success" role="alert">${response.message}</div>`
@@ -446,7 +455,7 @@
             },
           });
         });
-        //Get Banner Details
+        //Get Testimonial Details
         $(document).on("click", ".edit-btn", function () {
           const id = $(this).data("id");
           $("#update-form").attr("data-id", id);
@@ -454,6 +463,9 @@
             url: `/testimonial-details/${id}`,
             async: true,
             method: "GET",
+             xhrFields: {
+              withCredentials: true,
+            },
             success: function (response) {
               const testimonial = response.data;
               $("#edit-author").val(testimonial.author);
@@ -467,7 +479,7 @@
           $("#update-form").removeAttr("data-id")[0].reset();
           $("#edit-status").prop("checked", false);
         });
-        //Update Banner
+        //Update Testimonial
         $("#update-form").submit(function (e) {
           e.preventDefault();
           const id = $("#update-form").attr("data-id");
@@ -479,6 +491,9 @@
             type: "PATCH",
             processData: false,
             contentType: false,
+             xhrFields: {
+              withCredentials: true,
+            },
             success: function (response) {
               $("#flashMessage").html(
                 `<div class="alert alert-success" role="alert">${response.message}</div>`
