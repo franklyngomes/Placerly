@@ -58,7 +58,7 @@ class AboutController {
         values,
       });
       if (req.file) {
-        aboutData.image = req.file.path;
+        aboutData.image = req.file.path.replace(/\\/g,"/");
       }
       const { error, value } = AboutSchemaJoi.validate(aboutData);
       const data = await value.save();
@@ -101,7 +101,6 @@ class AboutController {
     try {
       const id = req.params.id;
       let payload = { ...req.body };
-      // Converting string "true"/"false" to real boolean
       if (payload.status === "true") payload.status = true;
       if (payload.status === "false") payload.status = false;
       const { error, value } = AboutSchemaJoi.validate(payload);
@@ -130,7 +129,7 @@ class AboutController {
           if (fsSync.existsSync(updateData.image)) {
             await fs.unlink(updateData.image);
           }
-          updateData.image = req.files.image[0].path;
+          updateData.image = req.files.image[0].path.replace(/\\/g,"/");
         }
       }
       await updateData.save();

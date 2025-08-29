@@ -37,7 +37,7 @@ class TestimonialController {
         comment,
       });
       if (req.file) {
-        testimonialData.image = req.file.path;
+        testimonialData.image = req.file.path.replace(/\\/g,"/");
       }
       const { error, value } = TestimonialSchemaJoi.validate(testimonialData);
       const data = await value.save();
@@ -93,7 +93,7 @@ class TestimonialController {
           if (fsSync.existsSync(updateData.image)) {
             await fs.unlink(updateData.image);
           }
-          updateData.image = req.files.image[0].path;
+          updateData.image = req.files.image[0].path.replace(/\\/g,"/");
         }
       }
       await updateData.save();

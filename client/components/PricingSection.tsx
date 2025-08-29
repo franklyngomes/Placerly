@@ -47,7 +47,7 @@ const PricingSection = () => {
                         <span>/ month</span>
                       </div>
                       <div>
-                        <a className="btn" href="#">
+                        <a className="btn" href="https://placerly-1.onrender.com/">
                           Get Started
                         </a>
                       </div>
@@ -73,7 +73,7 @@ const PricingSection = () => {
                             <span>/ month</span>
                           </div>
                           <div>
-                            <a className="btn btn-white hover-outline" href="#">
+                            <a className="btn btn-white hover-outline" href="https://placerly-1.onrender.com/">
                               Get Started
                             </a>
                           </div>

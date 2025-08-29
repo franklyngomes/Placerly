@@ -40,7 +40,7 @@ const HeroSection = () => {
                     data-aos="fade-up"
                     data-aos-delay="300"
                   >
-                    <a className="btn" href="#">
+                    <a className="btn" href="https://placerly-1.onrender.com/">
                       Get Started Now
                     </a>
                     <a className="btn btn-white-outline" href="#">

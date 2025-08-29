@@ -117,7 +117,7 @@ const Navbar = () => {
 
           <div className="ms-auto w-auto">
             <div className="header-social d-flex align-items-center gap-1">
-              <a className="btn btn-primary py-2" href="#">
+              <a className="btn btn-primary py-2" href="https://placerly-1.onrender.com/">
                 Get Started
               </a>
 
