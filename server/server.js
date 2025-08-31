@@ -21,7 +21,6 @@ const allowedOrigins = [
   "https://placerly-1.onrender.com",
   "https://placerly.vercel.app",
   "https://placerly.onrender.com",
-  "http://localhost:5000"
 ];
 app.use(
   cors({
