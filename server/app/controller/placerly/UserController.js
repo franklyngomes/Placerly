@@ -367,7 +367,7 @@ class UserController {
                   src="http://localhost:5000/public/images/logo-png.png"
                   width="150"
                   height="60"
-                  alt="Medisync Logo"
+                  alt="Placerly Logo"
                 />
               </td>
             </tr>
@@ -378,7 +378,7 @@ class UserController {
             </tr>
             <tr>
               <td align="center" style="font-size: 14px; color: #374151; padding-bottom: 10px;">
-                OTP for your Medisync account has been created successfully:
+                OTP for your Placerly account has been created successfully:
               </td>
             </tr>
             <tr>
