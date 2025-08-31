@@ -42,4 +42,20 @@ const hmacProcess = (value, key) => {
   return result;
 };
 
-module.exports = { hashPassword, comparePassword, AuthCheck, hmacProcess };
+const redirect = (req, res, next) => {
+  try {
+    const token = req.cookies.token
+    if(!token){ 
+      res.redirect("/signin")
+      return 
+    }
+    next()
+  } catch (error) {
+    return res.status(HttpCode.serverError).json({
+      status: false,
+      message: error.message,
+    });
+  }
+}
+
+module.exports = { hashPassword, comparePassword, AuthCheck, hmacProcess, redirect };

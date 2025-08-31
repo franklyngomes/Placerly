@@ -12,10 +12,10 @@ const ServiceController = require("../controller/client/ServiceController");
 const TestimonialController = require("../controller/client/TestimonialController");
 const PricingController = require("../controller/client/PricingController")
 const FaqController = require("../controller/client/FaQController");
-const { AuthCheck } = require("../middleware/Auth");
+const { AuthCheck, redirect } = require("../middleware/Auth");
 const upload = multer();
 
-router.get("/", AuthCheck, PageController.DashboardPage);
+router.get("/",redirect, AuthCheck, PageController.DashboardPage);
 
 // Banner Routes
 router.get("/banner",AuthCheck, PageController.BannerListPage);
