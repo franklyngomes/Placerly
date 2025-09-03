@@ -1,11 +1,11 @@
 "use client";
 import { BannerQuery } from "@/api/query/ClientQuery";
 import Image from "next/image";
-import React from "react";
 
 const HeroSection = () => {
-  const {data} = BannerQuery()
+  const { data } = BannerQuery()
   const banner = data?.data
+
   return (
     <div>
       <section className="hero__v6 section" id="home">
@@ -26,7 +26,7 @@ const HeroSection = () => {
                     data-aos="fade-up"
                     data-aos-delay="100"
                   >
-                   {banner?.title}
+                    {banner?.title}
                   </h1>
                   <p
                     className="hero-description mb-4 mb-lg-5"
@@ -75,7 +75,7 @@ const HeroSection = () => {
                         className="img-fluid js-img-to-inline-svg"
                         src="/assets/images/logo/actual-size/logo-air-bnb__black.svg"
                         alt="Company 1"
-                        style={{ height: "auto"}}
+                        style={{ height: "auto" }}
                         height={0}
                         width={110}
                       />
@@ -83,7 +83,7 @@ const HeroSection = () => {
                         className="img-fluid js-img-to-inline-svg"
                         src="/assets/images/logo/actual-size/logo-ibm__black.svg"
                         alt="Company 2"
-                        style={{height: "auto"}}
+                        style={{ height: "auto" }}
                         height={0}
                         width={80}
                       />
@@ -91,7 +91,7 @@ const HeroSection = () => {
                         className="img-fluid js-img-to-inline-svg"
                         src="/assets/images/logo/actual-size/logo-google__black.svg"
                         alt="Company 3"
-                        style={{height: "auto"}}
+                        style={{ height: "auto" }}
                         height={0}
                         width={110}
                       />

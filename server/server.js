@@ -21,7 +21,7 @@ const allowedOrigins = [
   "https://placerly-1.onrender.com",
   "https://placerly.vercel.app",
   "https://placerly.onrender.com",
-  "http://localhost:5000"
+  "http://localhost:3000"
 ];
 app.set("trust proxy", 1);
 app.use(
