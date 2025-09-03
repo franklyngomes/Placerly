@@ -23,6 +23,7 @@ const allowedOrigins = [
   "https://placerly.onrender.com",
   "http://localhost:5000"
 ];
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin:function (origin , callback){
