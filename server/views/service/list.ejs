@@ -270,34 +270,35 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+      <form action="/admin/signout" method="post">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Ready to Leave?
+              </h5>
+              <button
+                class="close"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Select "Logout" below if you are ready to end your current
+              session.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" type="button" data-dismiss="modal">
+                Cancel
+              </button>
+              <button class="btn btn-primary" type="submit">Logout</button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -331,9 +332,9 @@
         $.ajax({
           url: "/list-service",
           type: "GET",
-           xhrFields: {
-              withCredentials: true,
-            },
+          xhrFields: {
+            withCredentials: true,
+          },
           success: function (response) {
             const services = response.data;
             const tbody = $("#serviceTableBody");
@@ -383,7 +384,7 @@
             url: `/delete-service/${id}`,
             async: true,
             method: "DELETE",
-             xhrFields: {
+            xhrFields: {
               withCredentials: true,
             },
             success: function (response) {
@@ -426,7 +427,7 @@
             data: formData,
             processData: false,
             contentType: false,
-             xhrFields: {
+            xhrFields: {
               withCredentials: true,
             },
             success: function (response) {
@@ -462,7 +463,7 @@
             url: `/service-details/${id}`,
             async: true,
             method: "GET",
-             xhrFields: {
+            xhrFields: {
               withCredentials: true,
             },
             success: function (response) {
@@ -470,7 +471,6 @@
               $("#edit-title").val(service.title);
               $("#edit-description").val(service.description);
               $("#edit-url").val(service.url);
-             
             },
           });
         });
@@ -490,7 +490,7 @@
             type: "PATCH",
             processData: false,
             contentType: false,
-             xhrFields: {
+            xhrFields: {
               withCredentials: true,
             },
             success: function (response) {
