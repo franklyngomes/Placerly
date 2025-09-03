@@ -21,6 +21,7 @@ const allowedOrigins = [
   "https://placerly-1.onrender.com",
   "https://placerly.vercel.app",
   "https://placerly.onrender.com",
+  "http://localhost:5000"
 ];
 app.use(
   cors({
@@ -40,7 +41,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_CONNECTION_STRING,
       collectionName: "sessions",
