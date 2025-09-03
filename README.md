@@ -115,7 +115,6 @@ You can try out the **Admin Panel** using these credentials:
    # In placerly
    npm run dev
 
-   npm install
    # In server
    npm start
    ```
