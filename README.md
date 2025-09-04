@@ -1,4 +1,4 @@
-# Placerly Finance
+# Placerly Finance - Wealth Management System
 
 Placerly is a full-stack finance management platform that allows users to manage assets, accounts, and transitions with a modern UI for clients and a secure admin panel for administrators.
 
