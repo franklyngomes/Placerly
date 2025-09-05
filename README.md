@@ -19,6 +19,11 @@ You can try out the **Admin Panel** using these credentials:
 - **Email**: `quadeyaunifre-8075@yopmail.com`
 - **Password**: `abcdefg123`
 
+You can try out the **Finance Console Dashboard** using these credentials:
+
+- **Email**: `wenejeippemo-7240@yopmail.com`
+- **Password**: `abcdefg123`
+
 ---
 
 ## 🛠️ Tech Stack
