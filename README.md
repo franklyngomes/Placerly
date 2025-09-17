@@ -21,7 +21,7 @@ You can try out the **Admin Panel** using these credentials:
 
 You can try out the **Finance Console Dashboard** using these credentials:
 
-- **Email**: `wenejeippemo-7240@yopmail.com`
+- **Email**: `quadeyaunifre-8075@yopmail.com`
 - **Password**: `abcdefg123`
 
 ---
